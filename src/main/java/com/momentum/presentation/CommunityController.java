@@ -6,6 +6,7 @@ import com.momentum.dto.request.CreateConcernPostRequest;
 import com.momentum.dto.response.GetAllConcernPostResponse;
 import com.momentum.dto.response.GetAllDiseaseResponse;
 import com.momentum.dto.response.GetConcernPostResponse;
+import com.momentum.dto.response.GetConcernPostTotalResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
@@ -45,6 +46,12 @@ public class CommunityController {
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") final int page
     ) {
         List<GetAllConcernPostResponse> responses = communityService.getAllConcernPosts(disease, page);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/total-communities/concerns")
+    public ResponseEntity<List<GetConcernPostTotalResponse>> getTotalConcernPosts() {
+        List<GetConcernPostTotalResponse> responses = communityService.getConcernPostsTotal();
         return ResponseEntity.ok(responses);
     }
 

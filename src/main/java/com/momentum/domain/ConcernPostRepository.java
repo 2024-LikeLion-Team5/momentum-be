@@ -13,4 +13,6 @@ public interface ConcernPostRepository extends JpaRepository<ConcernPost, Long> 
             + " WHERE (cp.disease IS NULL OR cp.disease = :disease)"
             + " ORDER BY cp.createdAt DESC")
     Page<ConcernPost> findAllByDiseaseAndOrderByCreatedAtDesc(@Param("disease") Disease disease, Pageable pageable);
+
+    Page<ConcernPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

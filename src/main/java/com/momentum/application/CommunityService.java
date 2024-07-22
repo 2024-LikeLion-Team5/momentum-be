@@ -6,6 +6,7 @@ import com.momentum.domain.vo.Disease;
 import com.momentum.dto.request.CreateConcernPostRequest;
 import com.momentum.dto.response.GetAllConcernPostResponse;
 import com.momentum.dto.response.GetConcernPostResponse;
+import com.momentum.dto.response.GetConcernPostTotalResponse;
 import com.momentum.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
 import java.util.List;
@@ -43,11 +44,21 @@ public class CommunityService {
         return GetConcernPostResponse.from(concernPost);
     }
 
+    @Transactional(readOnly = true)
     public List<GetAllConcernPostResponse> getAllConcernPosts(final String diseaseRequest, final int page) {
         final Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
         return concernPostRepository.findAllByDiseaseAndOrderByCreatedAtDesc(Disease.valueOf(diseaseRequest), pageable)
                 .stream()
                 .map(GetAllConcernPostResponse::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetConcernPostTotalResponse> getConcernPostsTotal() {
+        Pageable pageable = PageRequest.of(0, 6);
+        return concernPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+                .stream()
+                .map(GetConcernPostTotalResponse::from)
                 .toList();
     }
 }
