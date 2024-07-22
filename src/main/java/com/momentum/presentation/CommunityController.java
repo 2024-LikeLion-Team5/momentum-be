@@ -1,10 +1,14 @@
 package com.momentum.presentation;
 
 import com.momentum.application.CommunityService;
+import com.momentum.domain.vo.Disease;
 import com.momentum.dto.request.CreateConcernPostRequest;
+import com.momentum.dto.response.GetAllDiseaseResponse;
 import com.momentum.dto.response.GetConcernPostResponse;
 import jakarta.validation.Valid;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +33,13 @@ public class CommunityController {
     public ResponseEntity<GetConcernPostResponse> getConcernPost(@PathVariable Long postId) {
         GetConcernPostResponse response = communityService.getConcernPost(postId);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/disease")
+    public ResponseEntity<List<GetAllDiseaseResponse>> getAllDisease() {
+        List<GetAllDiseaseResponse> responses = Arrays.stream(Disease.values())
+                .map(GetAllDiseaseResponse::new)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 }
