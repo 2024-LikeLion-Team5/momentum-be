@@ -50,7 +50,7 @@ public class ConcernPostController {
     }
 
     @GetMapping("/total-communities/concerns")
-    public ResponseEntity<List<GetConcernPostTotalResponse>> getTotalConcernPosts() {
+    public ResponseEntity<List<GetConcernPostTotalResponse>> getConcernPostsTotal() {
         List<GetConcernPostTotalResponse> responses = concernPostService.getConcernPostsTotal();
         return ResponseEntity.ok(responses);
     }

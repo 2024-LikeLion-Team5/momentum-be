@@ -12,6 +12,10 @@ public interface SurgeryReviewPostRepository extends JpaRepository<SurgeryReview
     @Query("SELECT srp FROM SurgeryReviewPost srp"
             + " WHERE (srp.disease IS NULL OR srp.disease = :disease)"
             + " ORDER BY srp.createdAt DESC")
-    Page<SurgeryReviewPost> findAllByDiseaseAndOrderByCreatedAtDesc(@Param("disease") Disease disease,
-                                                                    Pageable pageable);
+    Page<SurgeryReviewPost> findAllByDiseaseAndOrderByCreatedAtDesc(
+            @Param("disease") Disease disease,
+            Pageable pageable
+    );
+
+    Page<SurgeryReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

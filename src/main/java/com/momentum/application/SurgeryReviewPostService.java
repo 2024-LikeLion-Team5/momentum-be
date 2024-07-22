@@ -6,6 +6,7 @@ import com.momentum.domain.vo.Disease;
 import com.momentum.dto.request.community.CreateSurgeryReviewPostRequest;
 import com.momentum.dto.response.community.GetAllSurgeryReviewPostResponse;
 import com.momentum.dto.response.community.GetSurgeryReviewPostResponse;
+import com.momentum.dto.response.community.GetSurgeryReviewPostTotalResponse;
 import com.momentum.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
 import java.util.List;
@@ -50,6 +51,14 @@ public class SurgeryReviewPostService {
         return surgeryReviewPostRepository.findAllByDiseaseAndOrderByCreatedAtDesc(Disease.valueOf(disease), pageable)
                 .stream()
                 .map(GetAllSurgeryReviewPostResponse::from)
+                .toList();
+    }
+
+    public List<GetSurgeryReviewPostTotalResponse> getSurgeryReviewPostsTotal() {
+        Pageable pageable = PageRequest.of(0, 6);
+        return surgeryReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+                .stream()
+                .map(GetSurgeryReviewPostTotalResponse::from)
                 .toList();
     }
 }

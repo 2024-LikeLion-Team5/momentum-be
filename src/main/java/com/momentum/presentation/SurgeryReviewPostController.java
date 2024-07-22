@@ -4,6 +4,7 @@ import com.momentum.application.SurgeryReviewPostService;
 import com.momentum.dto.request.community.CreateSurgeryReviewPostRequest;
 import com.momentum.dto.response.community.GetAllSurgeryReviewPostResponse;
 import com.momentum.dto.response.community.GetSurgeryReviewPostResponse;
+import com.momentum.dto.response.community.GetSurgeryReviewPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
 import java.util.List;
@@ -42,6 +43,12 @@ public class SurgeryReviewPostController {
     ) {
         List<GetAllSurgeryReviewPostResponse> responses =
                 surgeryReviewPostService.getAllSurgeryReviewPosts(disease, page);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/total-communities/surgery-reviews")
+    public ResponseEntity<List<GetSurgeryReviewPostTotalResponse>> getSurgeryReviewPostsTotal() {
+        List<GetSurgeryReviewPostTotalResponse> responses = surgeryReviewPostService.getSurgeryReviewPostsTotal();
         return ResponseEntity.ok(responses);
     }
 }
