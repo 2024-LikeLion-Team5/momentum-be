@@ -37,7 +37,6 @@ public class ConcernPostService {
         return concernPostRepository.save(concernPost).getId();
     }
 
-    @Transactional
     public GetConcernPostResponse getConcernPost(Long postId) {
         ConcernPost concernPost = concernPostRepository.findById(postId)
                 .orElseThrow(() -> new NotFoundException(CommunityPostException.NON_EXISTENT_CONCERN_POST));

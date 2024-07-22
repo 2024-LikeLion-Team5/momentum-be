@@ -7,6 +7,7 @@ import lombok.Getter;
 public enum CommunityPostException implements ExceptionType {
 
     NON_EXISTENT_CONCERN_POST(300, "존재하지 않는 질환고민 게시글입니다."),
+    NON_EXISTENT_SURGERY_REVIEW_POST(301, "존재하지 않는 수술후기 게시글입니다."),
     ;
 
     private final int code;
