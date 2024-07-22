@@ -48,4 +48,8 @@ public abstract class Post extends BaseEntity {
         this.dislikes = dislikes;
         this.isNotice = false;
     }
+
+    public void increaseHits() {
+        this.hits++;
+    }
 }
