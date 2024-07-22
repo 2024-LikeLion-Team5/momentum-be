@@ -1,6 +1,6 @@
 package com.momentum.presentation;
 
-import com.momentum.application.CommunityService;
+import com.momentum.application.ConcernPostService;
 import com.momentum.domain.vo.Disease;
 import com.momentum.dto.request.CreateConcernPostRequest;
 import com.momentum.dto.response.GetAllConcernPostResponse;
@@ -23,19 +23,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class CommunityController {
+public class ConcernPostController {
 
-    private final CommunityService communityService;
+    private final ConcernPostService concernPostService;
 
     @PostMapping("/communities/concerns")
     public ResponseEntity<Void> createConcernPost(@Valid @RequestBody CreateConcernPostRequest request) {
-        Long postId = communityService.createConcernPost(request);
+        Long postId = concernPostService.createConcernPost(request);
         return ResponseEntity.created(URI.create("/posts/" + postId)).build();
     }
 
     @GetMapping("/communities/concerns/{postId}")
     public ResponseEntity<GetConcernPostResponse> getConcernPost(@PathVariable Long postId) {
-        GetConcernPostResponse response = communityService.getConcernPost(postId);
+        GetConcernPostResponse response = concernPostService.getConcernPost(postId);
         return ResponseEntity.ok(response);
     }
 
@@ -45,13 +45,13 @@ public class CommunityController {
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") final int page
     ) {
-        List<GetAllConcernPostResponse> responses = communityService.getAllConcernPosts(disease, page);
+        List<GetAllConcernPostResponse> responses = concernPostService.getAllConcernPosts(disease, page);
         return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/total-communities/concerns")
     public ResponseEntity<List<GetConcernPostTotalResponse>> getTotalConcernPosts() {
-        List<GetConcernPostTotalResponse> responses = communityService.getConcernPostsTotal();
+        List<GetConcernPostTotalResponse> responses = concernPostService.getConcernPostsTotal();
         return ResponseEntity.ok(responses);
     }
 

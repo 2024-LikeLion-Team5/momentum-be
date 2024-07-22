@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CommunityService {
+public class ConcernPostService {
 
     private static final int INITIAL_PAGE_SIZE = 10;
 
