@@ -32,6 +32,8 @@ public abstract class Post extends BaseEntity {
 
     private long dislikes;
 
+    private boolean isNotice;
+
     protected Post(
             final String title,
             final String content,
@@ -44,5 +46,6 @@ public abstract class Post extends BaseEntity {
         this.hits = hits;
         this.likes = likes;
         this.dislikes = dislikes;
+        this.isNotice = false;
     }
 }

@@ -17,6 +17,7 @@ public record GetConcernPostResponse(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
         LocalDateTime createdAt
 ) {
+
     public static GetConcernPostResponse from(ConcernPost concernPost) {
         return new GetConcernPostResponse(
                 "CONCERN",
