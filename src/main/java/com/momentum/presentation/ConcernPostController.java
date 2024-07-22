@@ -2,11 +2,11 @@ package com.momentum.presentation;
 
 import com.momentum.application.ConcernPostService;
 import com.momentum.domain.vo.Disease;
-import com.momentum.dto.request.CreateConcernPostRequest;
-import com.momentum.dto.response.GetAllConcernPostResponse;
-import com.momentum.dto.response.GetAllDiseaseResponse;
-import com.momentum.dto.response.GetConcernPostResponse;
-import com.momentum.dto.response.GetConcernPostTotalResponse;
+import com.momentum.dto.request.community.CreateConcernPostRequest;
+import com.momentum.dto.response.community.GetAllConcernPostResponse;
+import com.momentum.dto.response.community.GetAllDiseaseResponse;
+import com.momentum.dto.response.community.GetConcernPostResponse;
+import com.momentum.dto.response.community.GetConcernPostTotalResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;

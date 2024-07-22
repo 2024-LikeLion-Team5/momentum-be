@@ -1,9 +1,9 @@
 package com.momentum.presentation;
 
 import com.momentum.application.SurgeryReviewPostService;
-import com.momentum.dto.request.CreateSurgeryReviewPostRequest;
-import com.momentum.dto.response.GetAllSurgeryReviewPostResponse;
-import com.momentum.dto.response.GetSurgeryReviewPostResponse;
+import com.momentum.dto.request.community.CreateSurgeryReviewPostRequest;
+import com.momentum.dto.response.community.GetAllSurgeryReviewPostResponse;
+import com.momentum.dto.response.community.GetSurgeryReviewPostResponse;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
 import java.util.List;

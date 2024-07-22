@@ -1,4 +1,4 @@
-package com.momentum.dto.request;
+package com.momentum.dto.request.community;
 
 import com.momentum.domain.vo.Disease;
 import jakarta.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.momentum.dto.response;
+package com.momentum.dto.response.community;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.momentum.domain.ConcernPost;
