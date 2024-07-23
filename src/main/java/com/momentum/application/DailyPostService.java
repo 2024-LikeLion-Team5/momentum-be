@@ -5,6 +5,7 @@ import com.momentum.domain.DailyPostRepository;
 import com.momentum.dto.request.community.CreateDailyPostRequest;
 import com.momentum.dto.response.community.GetAllDailyPostResponse;
 import com.momentum.dto.response.community.GetDailyPostResponse;
+import com.momentum.dto.response.community.GetDailyPostTotalResponse;
 import com.momentum.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
 import java.util.List;
@@ -47,6 +48,15 @@ public class DailyPostService {
         return dailyPostRepository.findAllByOrderByCreatedAtDesc(pageable)
                 .stream()
                 .map(GetAllDailyPostResponse::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetDailyPostTotalResponse> getDailyPostsTotal() {
+        Pageable pageable = PageRequest.of(0, 6);
+        return dailyPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+                .stream()
+                .map(GetDailyPostTotalResponse::from)
                 .toList();
     }
 }

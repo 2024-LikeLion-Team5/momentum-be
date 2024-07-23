@@ -4,6 +4,7 @@ import com.momentum.application.DailyPostService;
 import com.momentum.dto.request.community.CreateDailyPostRequest;
 import com.momentum.dto.response.community.GetAllDailyPostResponse;
 import com.momentum.dto.response.community.GetDailyPostResponse;
+import com.momentum.dto.response.community.GetDailyPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
 import java.util.List;
@@ -41,6 +42,12 @@ public class DailyPostController {
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") final int page
     ) {
         List<GetAllDailyPostResponse> responses = dailyPostService.getAllDailyPosts(page);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/total-communities/dailies")
+    public ResponseEntity<List<GetDailyPostTotalResponse>> getDailyPostsTotal() {
+        List<GetDailyPostTotalResponse> responses = dailyPostService.getDailyPostsTotal();
         return ResponseEntity.ok(responses);
     }
 }
