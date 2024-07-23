@@ -54,6 +54,7 @@ public class SurgeryReviewPostService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public List<GetSurgeryReviewPostTotalResponse> getSurgeryReviewPostsTotal() {
         Pageable pageable = PageRequest.of(0, 6);
         return surgeryReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
