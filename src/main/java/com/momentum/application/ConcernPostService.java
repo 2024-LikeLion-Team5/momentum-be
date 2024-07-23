@@ -3,6 +3,7 @@ package com.momentum.application;
 import com.momentum.domain.ConcernPost;
 import com.momentum.domain.ConcernPostRepository;
 import com.momentum.domain.vo.Disease;
+import com.momentum.domain.vo.PostType;
 import com.momentum.dto.request.community.CreateConcernPostRequest;
 import com.momentum.dto.response.community.GetAllConcernPostResponse;
 import com.momentum.dto.response.community.GetConcernPostResponse;
@@ -33,6 +34,7 @@ public class ConcernPostService {
                 .hits(0)
                 .likes(0)
                 .dislikes(0)
+                .postType(PostType.CONCERN)
                 .build();
         return concernPostRepository.save(concernPost).getId();
     }

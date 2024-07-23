@@ -2,6 +2,7 @@ package com.momentum.presentation;
 
 import com.momentum.application.IntegrationSearchService;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
+import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,12 @@ public class IntegrationSearchController {
         List<GetCommunityIntegrationSearchResponse> responses =
                 integrationSearchService.getCommunityPosts(keyword, page);
         return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/communities/integration")
+    public ResponseEntity<GetCommunityPostTotalResponse> getCommunityPostsTotal(
+            @RequestParam(required = false) String keyword) {
+        GetCommunityPostTotalResponse response = integrationSearchService.getCommunityPostsTotal(keyword);
+        return ResponseEntity.ok(response);
     }
 }

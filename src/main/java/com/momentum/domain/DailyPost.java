@@ -1,5 +1,6 @@
 package com.momentum.domain;
 
+import com.momentum.domain.vo.PostType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,8 +27,9 @@ public class DailyPost extends Post {
             final String content,
             final long hits,
             final long likes,
-            final long dislikes
+            final long dislikes,
+            final PostType postType
     ) {
-        super(title, content, hits, likes, dislikes);
+        super(title, content, hits, likes, dislikes, postType);
     }
 }

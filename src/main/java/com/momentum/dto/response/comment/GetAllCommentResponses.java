@@ -15,7 +15,7 @@ public record GetAllCommentResponses(
         return new GetAllCommentResponses(totalCommentCount, commentResponses);
     }
 
-    public record CommentResponse(
+    private record CommentResponse(
             long commentId,
             String comment
     ) {

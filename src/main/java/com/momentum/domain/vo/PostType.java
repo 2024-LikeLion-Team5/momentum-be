@@ -4,16 +4,16 @@ import com.momentum.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
 import java.util.Arrays;
 
-public enum CommunityType {
+public enum PostType {
 
     CONCERN,
     SURGERY_REVIEW,
     DAILY,
-    NONE,
-    ;
+    DOCTOR_REVIEW,
+    HOSPITAL_REVIEW;
 
-    public static CommunityType getCommunityType(String communityType) {
-        return Arrays.stream(CommunityType.values())
+    public static PostType getCommunityType(String communityType) {
+        return Arrays.stream(PostType.values())
                 .filter(it -> it.name().equals(communityType))
                 .findAny()
                 .orElseThrow(() -> new NotFoundException(CommunityPostException.NON_EXISTENT_COMMUNITY_TYPE));

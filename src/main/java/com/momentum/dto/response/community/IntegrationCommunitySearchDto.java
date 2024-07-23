@@ -1,6 +1,7 @@
 package com.momentum.dto.response.community;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.momentum.domain.vo.PostType;
 import java.time.LocalDateTime;
 
 public record IntegrationCommunitySearchDto(
@@ -11,6 +12,7 @@ public record IntegrationCommunitySearchDto(
         LocalDateTime createdAt,
 
         long likeCount,
-        long hits
+        long hits,
+        PostType postType
 ) {
 }
