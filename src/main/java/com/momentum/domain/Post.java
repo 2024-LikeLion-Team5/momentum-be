@@ -1,5 +1,6 @@
 package com.momentum.domain;
 
+import com.momentum.domain.vo.PostType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,12 +35,15 @@ public abstract class Post extends BaseEntity {
 
     private boolean isNotice;
 
+    private PostType postType;
+
     protected Post(
             final String title,
             final String content,
             final long hits,
             final long likes,
-            final long dislikes
+            final long dislikes,
+            final PostType postType
     ) {
         this.title = title;
         this.content = content;
@@ -47,6 +51,7 @@ public abstract class Post extends BaseEntity {
         this.likes = likes;
         this.dislikes = dislikes;
         this.isNotice = false;
+        this.postType = postType;
     }
 
     public void increaseHits() {

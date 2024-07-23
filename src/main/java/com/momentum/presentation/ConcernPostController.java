@@ -41,7 +41,7 @@ public class ConcernPostController {
 
     @GetMapping("/communities/concerns")
     public ResponseEntity<List<GetAllConcernPostResponse>> getAllConcernPosts(
-            @RequestParam(name = "disease") String disease,
+            @RequestParam(name = "disease", required = false) String disease,
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") final int page
     ) {

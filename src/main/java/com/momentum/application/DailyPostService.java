@@ -2,6 +2,7 @@ package com.momentum.application;
 
 import com.momentum.domain.DailyPost;
 import com.momentum.domain.DailyPostRepository;
+import com.momentum.domain.vo.PostType;
 import com.momentum.dto.request.community.CreateDailyPostRequest;
 import com.momentum.dto.response.community.GetAllDailyPostResponse;
 import com.momentum.dto.response.community.GetDailyPostResponse;
@@ -31,6 +32,7 @@ public class DailyPostService {
                 .hits(0)
                 .likes(0)
                 .dislikes(0)
+                .postType(PostType.DAILY)
                 .build();
         return dailyPostRepository.save(dailyPost).getId();
     }

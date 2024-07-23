@@ -1,6 +1,7 @@
 package com.momentum.domain;
 
 import com.momentum.domain.vo.Disease;
+import com.momentum.domain.vo.PostType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,9 +31,10 @@ public class ConcernPost extends Post {
             final long hits,
             final long likes,
             final long dislikes,
-            final Disease disease
+            final Disease disease,
+            final PostType postType
     ) {
-        super(title, content, hits, likes, dislikes);
+        super(title, content, hits, likes, dislikes, postType);
         this.disease = disease;
     }
 }

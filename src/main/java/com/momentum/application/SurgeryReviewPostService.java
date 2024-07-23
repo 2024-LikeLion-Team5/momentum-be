@@ -3,6 +3,7 @@ package com.momentum.application;
 import com.momentum.domain.SurgeryReviewPost;
 import com.momentum.domain.SurgeryReviewPostRepository;
 import com.momentum.domain.vo.Disease;
+import com.momentum.domain.vo.PostType;
 import com.momentum.dto.request.community.CreateSurgeryReviewPostRequest;
 import com.momentum.dto.response.community.GetAllSurgeryReviewPostResponse;
 import com.momentum.dto.response.community.GetSurgeryReviewPostResponse;
@@ -34,6 +35,7 @@ public class SurgeryReviewPostService {
                 .dislikes(0)
                 .disease(request.disease())
                 .surgery(request.surgery())
+                .postType(PostType.SURGERY_REVIEW)
                 .build();
         return surgeryReviewPostRepository.save(surgeryReviewPost).getId();
     }
