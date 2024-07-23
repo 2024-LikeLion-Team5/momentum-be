@@ -3,12 +3,11 @@ package com.momentum.domain;
 import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface IntegrationSearchRepository {
+public interface IntegrationSearchRepository extends JpaRepository<Post, Long> {
 
     @Query(value = "SELECT new com.momentum.dto.response.community.IntegrationCommunitySearchDto(" +
             "community.id, community.title, community.created_at, community.likes, community.hits, community.post_type) "
