@@ -1,6 +1,9 @@
 package com.momentum.application;
 
 import com.momentum.domain.IntegrationSearchRepository;
+import com.momentum.domain.dto.response.*;
+import com.momentum.domain.entity.DoctorTreatmentReviewPost;
+import com.momentum.domain.entity.HospitalReviewPost;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
@@ -38,5 +41,45 @@ public class IntegrationSearchService {
                         .map(IntegrationCommunitySearchDto::from)
                         .toList();
         return GetCommunityPostTotalResponse.of(totalSearchedCount, integrationCommunitySearchDtos);
+    }
+
+    public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPostsTotal(final String keyword) {
+        Pageable pageable = PageRequest.of(0, 3);
+        long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
+        List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewSearchDtos =
+                integrationSearchRepository.findAllByKeyword(keyword, pageable)
+                        .stream()
+                        .map(IntegrationDoctorReviewSearchDto::from)
+                        .toList();
+        return GetDoctorTreatmentReviewPostTotalResponse.of(totalSearchedCount, (DoctorTreatmentReviewPost) integrationDoctorReviewSearchDtos);
+    }
+
+    public List<GetDoctorReviewIntegrationSearchResponse> getDoctorReviewPosts(final String keyword, final int page) {
+        Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
+        return integrationSearchRepository.findAllByKeyword(keyword, pageable)
+                .stream()
+                .map(IntegrationDoctorReviewSearchDto::from)
+                .map(GetDoctorReviewIntegrationSearchResponse::from)
+                .toList();
+    }
+
+    public GetHospitalReviewPostTotalResponse getHospitalReviewPostTotal(final String keyword) {
+        Pageable pageable = PageRequest.of(0, 3);
+        long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
+        List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewSearchDtos =
+                integrationSearchRepository.findAllByKeyword(keyword, pageable)
+                        .stream()
+                        .map(IntegrationDoctorReviewSearchDto::from)
+                        .toList();
+        return GetHospitalReviewPostTotalResponse.of(totalSearchedCount, (HospitalReviewPost) integrationDoctorReviewSearchDtos);
+    }
+
+    public List<GetHospitalIntegrationSearchResponse> getHospitalPosts(final String keyword, final int page) {
+        Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
+        return integrationSearchRepository.findAllByKeyword(keyword, pageable)
+                .stream()
+                .map(IntegrationDoctorReviewSearchDto::from)
+                .map(GetHospitalIntegrationSearchResponse::from)
+                .toList();
     }
 }
