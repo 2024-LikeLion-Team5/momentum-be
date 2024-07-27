@@ -68,4 +68,17 @@ public class DoctorTreatmentReviewService {
                 .map(GetDoctorTreatmentReviewPostTotalResponse::of)
                 .toList();
     }
+
+    /**
+     *
+     * @param keyword : 병원명 또는 지역
+     * @return : 병원명 또는 지역에 따른 후기
+     */
+    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPosts(String keyword) {
+        // Pageable pageable = PageRequest.of(page, size);
+        return doctorTreatmentReviewPostRepository.findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(keyword)
+                .stream()
+                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
+                .toList();
+    }
 }

@@ -49,8 +49,19 @@ public class DoctorTreatmentReviewController {
     }
 
     @GetMapping("/total-reviews/doctors")
-    public ResponseEntity<List<GetDoctorTreatmentReviewPostTotalResponse>> getDoctorTreatmentReviewPostsTotal() {
-        List<GetDoctorTreatmentReviewPostTotalResponse> responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPostsTotal();
+    public ResponseEntity<List<GetDoctorTreatmentReviewPostTotalResponse>> getDoctorTreatmentReviewPostsTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        List<GetDoctorTreatmentReviewPostTotalResponse> responses;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 검색어가 제공된 경우
+             responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPosts(keyword);
+        } else {
+            // 검색어가 제공되지 않은 경우
+            responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPostsTotal();
+        }
+
         return ResponseEntity.ok(responses);
     }
 }

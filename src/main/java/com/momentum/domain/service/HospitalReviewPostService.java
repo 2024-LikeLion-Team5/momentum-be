@@ -2,6 +2,7 @@ package com.momentum.domain.service;
 
 import com.momentum.domain.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.domain.dto.response.GetAllHospitalReviewPostResponse;
+import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
 import com.momentum.domain.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.domain.dto.response.GetHospitalReviewPostTotalResponse;
 import com.momentum.domain.entity.HospitalReviewPost;
@@ -64,6 +65,19 @@ public class HospitalReviewPostService {
         return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
                 .stream()
                 .map(GetHospitalReviewPostTotalResponse::of)
+                .toList();
+    }
+
+    /**
+     *
+     * @param keyword : 병원명 또는 지역
+     * @return : 병원명 또는 지역에 따른 후기
+     */
+    public List<GetDoctorTreatmentReviewPostTotalResponse> getHospitalReviewPosts(String keyword) {
+        // Pageable pageable = PageRequest.of(page, size);
+        return hospitalReviewPostRepository.findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(keyword)
+                .stream()
+                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
                 .toList();
     }
 }

@@ -2,6 +2,7 @@ package com.momentum.domain.controller;
 
 import com.momentum.domain.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.domain.dto.response.GetAllHospitalReviewPostResponse;
+import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
 import com.momentum.domain.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.domain.dto.response.GetHospitalReviewPostTotalResponse;
 import com.momentum.domain.service.HospitalReviewPostService;
@@ -47,8 +48,34 @@ public class HospitalReviewPostController {
     }
 
     @GetMapping("/total-reviews/hospitals")
-    public ResponseEntity<List<GetHospitalReviewPostTotalResponse>> getHospitalReviewPostsTotal() {
-        List<GetHospitalReviewPostTotalResponse> responses = hospitalReviewPostService.getHospitalReviewPostsTotal();
+    public ResponseEntity<List<GetHospitalReviewPostTotalResponse>> getHospitalReviewPostsTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        List<GetHospitalReviewPostTotalResponse> responses;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 검색어가 제공된 경우
+            responses = hospitalReviewPostService.getHospitalReviewPosts(keyword);
+        } else {
+            responses = hospitalReviewPostService.getHospitalReviewPostsTotal();
+        }
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/total-reviews/doctors")
+    public ResponseEntity<List<GetDoctorTreatmentReviewPostTotalResponse>> getDoctorTreatmentReviewPostsTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        List<GetDoctorTreatmentReviewPostTotalResponse> responses;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            // 검색어가 제공된 경우
+            responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPosts(keyword);
+        } else {
+            // 검색어가 제공되지 않은 경우
+            responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPostsTotal();
+        }
+
         return ResponseEntity.ok(responses);
     }
 }
