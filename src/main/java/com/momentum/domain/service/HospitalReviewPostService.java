@@ -73,11 +73,11 @@ public class HospitalReviewPostService {
      * @param keyword : 병원명 또는 지역
      * @return : 병원명 또는 지역에 따른 후기
      */
-    public List<GetDoctorTreatmentReviewPostTotalResponse> getHospitalReviewPosts(String keyword) {
+    public List<GetHospitalReviewPostTotalResponse> getHospitalReviewPosts(String keyword) {
         // Pageable pageable = PageRequest.of(page, size);
         return hospitalReviewPostRepository.findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(keyword)
                 .stream()
-                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
+                .map(GetHospitalReviewPostTotalResponse::of)
                 .toList();
     }
 }
