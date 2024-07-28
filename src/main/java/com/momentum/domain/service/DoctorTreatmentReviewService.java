@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -60,23 +61,27 @@ public class DoctorTreatmentReviewService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
-    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal() {
-        Pageable pageable = PageRequest.of(0, 6);
-        return doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
-                .stream()
-                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
-                .toList();
-    }
-
     /**
      *
      * @param keyword : 병원명 또는 지역
      * @return : 병원명 또는 지역에 따른 후기
      */
-    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPosts(String keyword) {
+    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPosts(
+            final String hospital,
+            final String doctor
+    ) {
         // Pageable pageable = PageRequest.of(page, size);
-        return doctorTreatmentReviewPostRepository.findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(keyword)
+        return doctorTreatmentReviewPostRepository
+                .findByHospitalContainingOrDoctorContainingOrderByCreatedAtDesc(hospital, doctor)
+                .stream()
+                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal() {
+        Pageable pageable = PageRequest.of(0, 6);
+        return doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
                 .stream()
                 .map(GetDoctorTreatmentReviewPostTotalResponse::of)
                 .toList();

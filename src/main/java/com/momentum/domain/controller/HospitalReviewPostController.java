@@ -1,10 +1,7 @@
 package com.momentum.domain.controller;
 
 import com.momentum.domain.dto.request.CreateHospitalReviewPostRequest;
-import com.momentum.domain.dto.response.GetAllHospitalReviewPostResponse;
-import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
-import com.momentum.domain.dto.response.GetHospitalReviewPostResponse;
-import com.momentum.domain.dto.response.GetHospitalReviewPostTotalResponse;
+import com.momentum.domain.dto.response.*;
 import com.momentum.domain.service.HospitalReviewPostService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -18,8 +15,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class HospitalReviewPostController {
-
-    private final HospitalInfoController hospitalInfoController;
 
     private final HospitalReviewPostService hospitalReviewPostService;
 
@@ -48,17 +43,8 @@ public class HospitalReviewPostController {
     }
 
     @GetMapping("/total-reviews/hospitals")
-    public ResponseEntity<List<GetHospitalReviewPostTotalResponse>> getHospitalReviewPostsTotal(
-            @RequestParam(required = false) String keyword
-    ) {
-        List<GetHospitalReviewPostTotalResponse> responses;
-
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            // 검색어가 제공된 경우
-            responses = hospitalReviewPostService.getHospitalReviewPosts(keyword);
-        } else {
-            responses = hospitalReviewPostService.getHospitalReviewPostsTotal();
-        }
+    public ResponseEntity<List<GetHospitalReviewPostTotalResponse>> getHospitalReviewPostsTotal() {
+        List<GetHospitalReviewPostTotalResponse> responses = hospitalReviewPostService.getHospitalReviewPostsTotal();
         return ResponseEntity.ok(responses);
     }
 }

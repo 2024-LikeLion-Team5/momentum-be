@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,7 +19,9 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
 //            + " ORDER BY drp.createdAt DESC")
 //    Page<DoctorTreatmentReviewPost> findByHospitalOrLocationAndOrderByCreatedAtDesc(@Param("keyword") String keyword);
 
-    Optional<DoctorTreatmentReviewPost> findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(String keyword);
+//    Optional<DoctorTreatmentReviewPost> findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(String keyword);
+
+    List<DoctorTreatmentReviewPost> findByHospitalContainingOrDoctorContainingOrderByCreatedAtDesc(String hospital, String doctor);
 
     Page<DoctorTreatmentReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

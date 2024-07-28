@@ -10,16 +10,17 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class GetDoctorTreatmentReviewPostTotalResponse {
-    Long postId;
-    String title;
+
+    private Long postId;
+    private String title;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
-    LocalDateTime createdAt;
-    String disease;
-    String treatment;
-    String doctor;
-    int ageGroup;
-    double rating;
-    String content;
+    private LocalDateTime createdAt;
+    private String disease;
+    private String treatment;
+    private String doctor;
+    private int ageGroup;
+    private double rating;
+    private String content;
 
     public static GetDoctorTreatmentReviewPostTotalResponse of(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
         return GetDoctorTreatmentReviewPostTotalResponse.builder()

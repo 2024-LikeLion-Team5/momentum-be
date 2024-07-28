@@ -50,13 +50,14 @@ public class DoctorTreatmentReviewController {
 
     @GetMapping("/total-reviews/doctors")
     public ResponseEntity<List<GetDoctorTreatmentReviewPostTotalResponse>> getDoctorTreatmentReviewPostsTotal(
-            @RequestParam(required = false) String keyword
+            @RequestParam(required = false) String hospital,
+            @RequestParam(required = false) String doctor
     ) {
         List<GetDoctorTreatmentReviewPostTotalResponse> responses;
 
-        if (keyword != null && !keyword.trim().isEmpty()) {
+        if ((hospital != null && !hospital.trim().isEmpty()) || doctor != null && !doctor.trim().isEmpty()) {
             // 검색어가 제공된 경우
-             responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPosts(keyword);
+             responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPosts(hospital, doctor);
         } else {
             // 검색어가 제공되지 않은 경우
             responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPostsTotal();

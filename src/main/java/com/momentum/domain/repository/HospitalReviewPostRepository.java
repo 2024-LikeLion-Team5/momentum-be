@@ -1,6 +1,7 @@
 package com.momentum.domain.repository;
 
 import com.momentum.domain.entity.DoctorTreatmentReviewPost;
+import com.momentum.domain.entity.HospitalInfo;
 import com.momentum.domain.entity.HospitalReviewPost;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +17,6 @@ public interface HospitalReviewPostRepository extends JpaRepository<HospitalRevi
 //    @Query("SELECT hrp FROM HospitalReviewPost hrp"
 //            + " ORDER BY hrp.createdAt DESC")
 //    Page<HospitalReviewPost> findAllByDiseaseAndOrderByCreatedAtDesc(Pageable pageable);
-
-    Optional<HospitalReviewPost> findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(String keyword);
 
     Page<HospitalReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }
