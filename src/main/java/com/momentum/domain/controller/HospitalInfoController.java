@@ -25,10 +25,9 @@ public class HospitalInfoController {
 
     @GetMapping("/hospital-search/hospitals")
     public ResponseEntity<List<GetAllHospitalInfoTotalResponse>> getHospitalInfoTotal(
-            @RequestParam(required = false) String hospital,
-            @RequestParam(required = false) String address
+            @RequestParam(required = false) String keyword
     ) {
-        List<GetAllHospitalInfoTotalResponse> responses = hospitalInfoService.getHospitalInfoTotal(hospital, address);
+        List<GetAllHospitalInfoTotalResponse> responses = hospitalInfoService.getHospitalInfoTotal(keyword);
         return ResponseEntity.ok(responses);
     }
 }

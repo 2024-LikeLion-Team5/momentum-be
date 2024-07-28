@@ -25,8 +25,8 @@ public class HospitalInfoService {
      * @param hospital,address : 병원명 또는 지역
      * @return : 병원명 또는 지역에 따른 후기
      */
-    public List<GetAllHospitalInfoTotalResponse> getHospitalInfoTotal(final String hospital, final String address) {
-        return hospitalInfoRepository.findByHospitalContainingOrAddressContaining(hospital, address)
+    public List<GetAllHospitalInfoTotalResponse> getHospitalInfoTotal(final String keyword) {
+        return hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword)
                 .stream()
                 .map(GetAllHospitalInfoTotalResponse::of)
                 .toList();
