@@ -23,7 +23,4 @@ public class HospitalInfo {
     private double facilityRating;
     private double atmosphereRating;
     private double employeeRating;
-
-    @Setter
-    private String keyword;
 }

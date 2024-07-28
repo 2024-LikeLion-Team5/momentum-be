@@ -10,7 +10,5 @@ import java.util.Optional;
 @Repository
 public interface HospitalInfoRepository extends JpaRepository<HospitalInfo, Long> {
 
-    Optional<HospitalInfo> findByKeywordIsNullOrKeyword(String keyword);
-
     List<HospitalInfo> findByHospitalContainingOrAddressContaining(String hospital, String address);
 }

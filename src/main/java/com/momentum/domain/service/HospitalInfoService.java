@@ -22,7 +22,7 @@ public class HospitalInfoService {
 
     /**
      *
-     * @param keyword : 병원명 또는 지역
+     * @param hospital,address : 병원명 또는 지역
      * @return : 병원명 또는 지역에 따른 후기
      */
     public List<GetAllHospitalInfoTotalResponse> getHospitalInfoTotal(final String hospital, final String address) {
