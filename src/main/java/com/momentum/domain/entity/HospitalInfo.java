@@ -8,6 +8,7 @@ import lombok.*;
 
 @Builder
 @Getter
+@Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,12 +16,14 @@ public class HospitalInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hospitalId;
+    private Long id;
 
     private String hospital;
     private String address;
     private String operatingTime;
-    private double facilityRating;
-    private double atmosphereRating;
-    private double employeeRating;
+    private double averageFacilityRating;
+    private double averageAtmosphereRating;
+    private double averageEmployeeRating;
+
+    private int totalReviews;
 }

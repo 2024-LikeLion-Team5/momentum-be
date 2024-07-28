@@ -2,6 +2,7 @@ package com.momentum.domain.service;
 
 import com.momentum.domain.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.domain.dto.response.*;
+import com.momentum.domain.entity.HospitalInfo;
 import com.momentum.domain.entity.HospitalReviewPost;
 import com.momentum.domain.repository.HospitalInfoRepository;
 import com.momentum.domain.repository.HospitalReviewPostRepository;
@@ -23,6 +24,8 @@ public class HospitalReviewPostService {
     private final HospitalInfoRepository hospitalInfoRepository;
 
     public Long createHospitalReviewPost(CreateHospitalReviewPostRequest request) {
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital());
+
         HospitalReviewPost hospitalReviewPost = HospitalReviewPost.builder()
                 .treatment(request.treatment())
                 .hospital(request.hospital())
@@ -35,7 +38,26 @@ public class HospitalReviewPostService {
                 .likes(0)
                 .dislikes(0)
                 .build();
+
+        updateHospitalRatings(hospitalInfo);
         return hospitalReviewPostRepository.save(hospitalReviewPost).getId();
+    }
+
+    private void updateHospitalRatings(HospitalInfo hospitalInfo) {
+        List<HospitalReviewPost> reviews = hospitalReviewPostRepository.findByHospitalInfo(hospitalInfo);
+
+        double totalFacilityRating = reviews.stream().mapToDouble(HospitalReviewPost::getFacilityRating).sum();
+        double totalAtmosphereRating = reviews.stream().mapToDouble(HospitalReviewPost::getAtmosphereRating).sum();
+        double totalEmployeeRating = reviews.stream().mapToDouble(HospitalReviewPost::getEmployeeRating).sum();
+
+        int reviewCount = reviews.size();
+
+        hospitalInfo.setAverageFacilityRating(totalFacilityRating / reviewCount);
+        hospitalInfo.setAverageAtmosphereRating(totalAtmosphereRating / reviewCount);
+        hospitalInfo.setAverageEmployeeRating(totalEmployeeRating / reviewCount);
+        hospitalInfo.setTotalReviews(reviewCount);
+
+        hospitalInfoRepository.save(hospitalInfo);
     }
 
     public GetHospitalReviewPostResponse getHospitalReviewPost(Long postId) {
@@ -66,4 +88,6 @@ public class HospitalReviewPostService {
                 .map(GetHospitalReviewPostTotalResponse::of)
                 .toList();
     }
+
+
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,4 +20,6 @@ public interface HospitalReviewPostRepository extends JpaRepository<HospitalRevi
 //    Page<HospitalReviewPost> findAllByDiseaseAndOrderByCreatedAtDesc(Pageable pageable);
 
     Page<HospitalReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    List<HospitalReviewPost> findByHospitalInfo(HospitalInfo hospitalInfo);
 }

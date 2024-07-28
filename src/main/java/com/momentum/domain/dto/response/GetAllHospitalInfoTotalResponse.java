@@ -10,17 +10,17 @@ public class GetAllHospitalInfoTotalResponse {
 
     private String hospital;
     private String address;
-    private double facilityRating;
-    private double atmosphereRating;
-    private double employeeRating;
+    private double averageFacilityRating;
+    private double averageAtmosphereRating;
+    private double averageEmployeeRating;
 
     public static GetAllHospitalInfoTotalResponse of(HospitalInfo hospitalInfo) {
         return GetAllHospitalInfoTotalResponse.builder()
                 .hospital(hospitalInfo.getHospital())
                 .address(hospitalInfo.getAddress())
-                .facilityRating(hospitalInfo.getFacilityRating())
-                .atmosphereRating(hospitalInfo.getAtmosphereRating())
-                .employeeRating(hospitalInfo.getEmployeeRating())
+                .averageFacilityRating(hospitalInfo.getAverageFacilityRating())
+                .averageAtmosphereRating(hospitalInfo.getAverageAtmosphereRating())
+                .averageEmployeeRating(hospitalInfo.getAverageEmployeeRating())
                 .build();
     }
 }

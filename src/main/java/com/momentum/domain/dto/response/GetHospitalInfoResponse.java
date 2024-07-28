@@ -11,18 +11,18 @@ public class GetHospitalInfoResponse {
     private String hospital;
     private String address;
     private String operatingTime;
-    private double facilityRating;
-    private double atmosphereRating;
-    private double employeeRating;
+    private double averageFacilityRating;
+    private double averageAtmosphereRating;
+    private double averageEmployeeRating;
 
     public static GetHospitalInfoResponse of(HospitalInfo hospitalInfo) {
         return GetHospitalInfoResponse.builder()
                 .hospital(hospitalInfo.getHospital())
                 .address(hospitalInfo.getAddress())
                 .operatingTime(hospitalInfo.getOperatingTime())
-                .facilityRating(hospitalInfo.getFacilityRating())
-                .atmosphereRating(hospitalInfo.getAtmosphereRating())
-                .employeeRating(hospitalInfo.getEmployeeRating())
+                .averageFacilityRating(hospitalInfo.getAverageFacilityRating())
+                .averageAtmosphereRating(hospitalInfo.getAverageAtmosphereRating())
+                .averageEmployeeRating(hospitalInfo.getAverageEmployeeRating())
                 .build();
     }
 }

@@ -2,13 +2,11 @@ package com.momentum.domain.entity;
 
 import com.momentum.domain.Post;
 import com.momentum.domain.vo.PostType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode(callSuper = false)
@@ -17,6 +15,10 @@ public class HospitalReviewPost extends Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "hospital_id")
+    private HospitalInfo hospitalInfo;
 
     private String treatment;
     private String hospital;
