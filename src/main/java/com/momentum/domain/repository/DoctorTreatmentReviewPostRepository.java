@@ -21,7 +21,9 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
 
 //    Optional<DoctorTreatmentReviewPost> findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(String keyword);
 
-    List<DoctorTreatmentReviewPost> findByHospitalContainingOrDoctorContainingOrderByCreatedAtDesc(String hospital, String doctor);
+    List<DoctorTreatmentReviewPost> findByDoctorContainingOrderByCreatedAtDesc(String keyword);
+
+    List<DoctorTreatmentReviewPost> findByHospitalContainingOrHospitalContainingOrderByCreatedAtDesc(String hospital, String location);
 
     Page<DoctorTreatmentReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

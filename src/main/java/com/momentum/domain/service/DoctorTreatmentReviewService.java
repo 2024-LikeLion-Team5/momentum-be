@@ -67,12 +67,11 @@ public class DoctorTreatmentReviewService {
      * @return : 병원명 또는 지역에 따른 후기
      */
     public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPosts(
-            final String hospital,
-            final String doctor
+            final String keyword
     ) {
         // Pageable pageable = PageRequest.of(page, size);
         return doctorTreatmentReviewPostRepository
-                .findByHospitalContainingOrDoctorContainingOrderByCreatedAtDesc(hospital, doctor)
+                .findByHospitalContainingOrHospitalContainingOrderByCreatedAtDesc(keyword, keyword)
                 .stream()
                 .map(GetDoctorTreatmentReviewPostTotalResponse::of)
                 .toList();
