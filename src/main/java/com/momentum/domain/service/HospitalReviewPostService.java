@@ -73,6 +73,7 @@ public class HospitalReviewPostService {
             final Long hospitalId
     ) {
         // 목록 조회라 page 사용하고 병원 id로 병원 찾고 싶은데 조금 어렵습니다 ..
+        // 잠시 보류
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
         return hospitalReviewPostRepository.findAll()
                 .stream()
@@ -82,8 +83,8 @@ public class HospitalReviewPostService {
 
     @Transactional(readOnly = true)
     public List<GetHospitalReviewPostTotalResponse> getHospitalReviewPostsTotal() {
-        Pageable pageable = PageRequest.of(0, 6);
-        return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+//        Pageable pageable = PageRequest.of(0, 6);
+        return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(GetHospitalReviewPostTotalResponse::of)
                 .toList();

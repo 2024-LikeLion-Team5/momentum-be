@@ -13,17 +13,4 @@ import java.util.Optional;
 
 @Repository
 public interface DoctorTreatmentReviewPostRepository extends JpaRepository<DoctorTreatmentReviewPost, Long> {
-
-//    @Query("SELECT drp FROM DoctorTreatmentReviewPost drp"
-//            + " WHERE (drp.keyword IS NULL OR drp.keyword = :keyword)"
-//            + " ORDER BY drp.createdAt DESC")
-//    Page<DoctorTreatmentReviewPost> findByHospitalOrLocationAndOrderByCreatedAtDesc(@Param("keyword") String keyword);
-
-//    Optional<DoctorTreatmentReviewPost> findByKeywordIsNullOrKeywordOrderByCreatedAtDesc(String keyword);
-
-    List<DoctorTreatmentReviewPost> findByDoctorContainingOrderByCreatedAtDesc(String keyword);
-
-    List<DoctorTreatmentReviewPost> findByHospitalContainingOrHospitalContainingOrderByCreatedAtDesc(String hospital, String location);
-
-    Page<DoctorTreatmentReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
 }

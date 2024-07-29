@@ -1,5 +1,6 @@
 package com.momentum.domain.controller;
 
+import com.momentum.application.IntegrationSearchService;
 import com.momentum.domain.dto.request.CreateDoctorTreatmentReviewPostRequest;
 import com.momentum.domain.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostResponse;
@@ -18,7 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DoctorTreatmentReviewController {
 
-    private DoctorTreatmentReviewService doctorTreatmentReviewService;
+    private final IntegrationSearchService integrationSearchService;
+    private final DoctorTreatmentReviewService doctorTreatmentReviewService;
 
     @PostMapping("/hospital-reviews/doctor-reviews")
     public ResponseEntity<Void> createDoctorTreatmentReviewPost(@Valid @RequestBody CreateDoctorTreatmentReviewPostRequest request) {
@@ -49,19 +51,19 @@ public class DoctorTreatmentReviewController {
     }
 
     @GetMapping("/total-reviews/doctors")
-    public ResponseEntity<List<GetDoctorTreatmentReviewPostTotalResponse>> getDoctorTreatmentReviewPostsTotal(
+    public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-        List<GetDoctorTreatmentReviewPostTotalResponse> responses;
+        GetDoctorTreatmentReviewPostTotalResponse response;
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             // 검색어가 제공된 경우
-             responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPosts(keyword);
+             response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         } else {
             // 검색어가 제공되지 않은 경우
-            responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPostsTotal();
+            response = null;
         }
 
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(response);
     }
 }

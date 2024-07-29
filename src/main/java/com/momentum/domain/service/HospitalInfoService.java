@@ -4,6 +4,8 @@ import com.momentum.domain.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.domain.dto.response.GetHospitalInfoResponse;
 import com.momentum.domain.repository.HospitalInfoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +24,12 @@ public class HospitalInfoService {
 
     /**
      *
-     * @param hospital,address : 병원명 또는 지역
+     * @param keyword : 병원명 또는 지역
      * @return : 병원명 또는 지역에 따른 후기
      */
     public List<GetAllHospitalInfoTotalResponse> getHospitalInfoTotal(final String keyword) {
-        return hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword)
+        Pageable pageable = PageRequest.of(0, 3);
+        return hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword, pageable)
                 .stream()
                 .map(GetAllHospitalInfoTotalResponse::of)
                 .toList();

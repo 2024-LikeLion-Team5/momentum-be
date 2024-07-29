@@ -8,6 +8,7 @@ import lombok.Data;
 @Builder
 public class GetAllHospitalInfoTotalResponse {
 
+    private long id;
     private String hospital;
     private String address;
     private double averageFacilityRating;
@@ -16,6 +17,7 @@ public class GetAllHospitalInfoTotalResponse {
 
     public static GetAllHospitalInfoTotalResponse of(HospitalInfo hospitalInfo) {
         return GetAllHospitalInfoTotalResponse.builder()
+                .id(hospitalInfo.getId())
                 .hospital(hospitalInfo.getHospital())
                 .address(hospitalInfo.getAddress())
                 .averageFacilityRating(hospitalInfo.getAverageFacilityRating())

@@ -19,7 +19,7 @@ public interface HospitalReviewPostRepository extends JpaRepository<HospitalRevi
 //            + " ORDER BY hrp.createdAt DESC")
 //    Page<HospitalReviewPost> findAllByDiseaseAndOrderByCreatedAtDesc(Pageable pageable);
 
-    Page<HospitalReviewPost> findAllByOrderByCreatedAtDesc(Pageable pageable);
+    List<HospitalReviewPost> findAllByOrderByCreatedAtDesc();
 
     List<HospitalReviewPost> findByHospitalInfo(HospitalInfo hospitalInfo);
 }

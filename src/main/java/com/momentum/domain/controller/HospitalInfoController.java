@@ -4,6 +4,8 @@ import com.momentum.domain.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.domain.dto.response.GetHospitalInfoResponse;
 import com.momentum.domain.service.HospitalInfoService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

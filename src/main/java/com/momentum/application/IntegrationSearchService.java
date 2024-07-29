@@ -51,7 +51,7 @@ public class IntegrationSearchService {
                         .stream()
                         .map(IntegrationDoctorReviewSearchDto::from)
                         .toList();
-        return GetDoctorTreatmentReviewPostTotalResponse.of(totalSearchedCount, (DoctorTreatmentReviewPost) integrationDoctorReviewSearchDtos);
+        return GetDoctorTreatmentReviewPostTotalResponse.of(totalSearchedCount, integrationDoctorReviewSearchDtos);
     }
 
     public List<GetDoctorReviewIntegrationSearchResponse> getDoctorReviewPosts(final String keyword, final int page) {
@@ -66,10 +66,10 @@ public class IntegrationSearchService {
     public GetHospitalReviewPostTotalResponse getHospitalReviewPostTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
-        List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewSearchDtos =
+        List<IntegrationHospitalSearchDto> integrationDoctorReviewSearchDtos =
                 integrationSearchRepository.findAllByKeyword(keyword, pageable)
                         .stream()
-                        .map(IntegrationDoctorReviewSearchDto::from)
+                        .map(IntegrationHospitalSearchDto::from)
                         .toList();
         return GetHospitalReviewPostTotalResponse.of(totalSearchedCount, (HospitalReviewPost) integrationDoctorReviewSearchDtos);
     }

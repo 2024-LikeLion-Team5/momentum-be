@@ -4,8 +4,11 @@ import com.momentum.domain.dto.request.CreateDoctorTreatmentReviewPostRequest;
 import com.momentum.domain.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostResponse;
 import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
+import com.momentum.domain.dto.response.IntegrationDoctorReviewSearchDto;
 import com.momentum.domain.entity.DoctorTreatmentReviewPost;
 import com.momentum.domain.repository.DoctorTreatmentReviewPostRepository;
+import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
+import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,28 +64,31 @@ public class DoctorTreatmentReviewService {
                 .toList();
     }
 
-    /**
-     *
-     * @param keyword : 병원명 또는 지역
-     * @return : 병원명 또는 지역에 따른 후기
-     */
-    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPosts(
-            final String keyword
-    ) {
-        // Pageable pageable = PageRequest.of(page, size);
-        return doctorTreatmentReviewPostRepository
-                .findByHospitalContainingOrHospitalContainingOrderByCreatedAtDesc(keyword, keyword)
-                .stream()
-                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
-                .toList();
-    }
-
-    @Transactional(readOnly = true)
-    public List<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal() {
-        Pageable pageable = PageRequest.of(0, 6);
-        return doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
-                .stream()
-                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
-                .toList();
-    }
+//    /**
+//     *
+//     * @param keyword : 병원명 또는 지역
+//     * @return : 병원명 또는 지역에 따른 후기
+//     */
+//    public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPosts(
+//            final String keyword
+//    ) {
+//        // 페이지 정했고
+//        Pageable pageable = PageRequest.of(0, 3);
+//
+//        // 카운트 받았고
+//        long totalSearchedCount = doctorTreatmentReviewPostRepository.countAllByKeyword(keyword);
+//
+//        // 리스트로 만들었고
+//        List<GetDoctorTreatmentReviewPostTotalResponse> doctorTreatmentReviewPostTotalResponseList =
+//                doctorTreatmentReviewPostRepository
+//                .findByHospitalContainingOrHospitalContainingOrderByCreatedAtDesc(keyword, keyword, pageable)
+//                .stream()
+//                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
+//                .toList();
+//
+//        // TODO: 위의 것들을 모아서 of 메서드에 보내면 리스폰스로 받아서
+//        // TODO: 그냥 GetDoctorTreatmentReviewPostTotalResponse로 반환해 줘야 함
+//        // TODO: 그니까 밑의 of 메서드가 알아서 잘 묶어 줘야 함
+//        return GetDoctorTreatmentReviewPostTotalResponse.of(totalSearchedCount, doctorTreatmentReviewPostTotalResponseList);
+//    }
 }
