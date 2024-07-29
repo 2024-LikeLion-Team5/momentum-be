@@ -43,6 +43,7 @@ public class IntegrationSearchService {
         return GetCommunityPostTotalResponse.of(totalSearchedCount, integrationCommunitySearchDtos);
     }
 
+    // TODO: GetDoctorReviewIntegrationSearchResponse 수정
     public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPostsTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
@@ -63,6 +64,8 @@ public class IntegrationSearchService {
                 .toList();
     }
 
+    // TODO: IntegrationHospitalSearchDto 수정
+    // TODO: GetHospitalIntegrationSearchResponse 수정
     public GetHospitalReviewPostTotalResponse getHospitalReviewPostTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);

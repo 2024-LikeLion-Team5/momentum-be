@@ -1,10 +1,7 @@
 package com.momentum.domain.service;
 
 import com.momentum.domain.dto.request.CreateDoctorTreatmentReviewPostRequest;
-import com.momentum.domain.dto.response.GetAllDoctorTreatmentReviewPostResponse;
-import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostResponse;
-import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
-import com.momentum.domain.dto.response.IntegrationDoctorReviewSearchDto;
+import com.momentum.domain.dto.response.*;
 import com.momentum.domain.entity.DoctorTreatmentReviewPost;
 import com.momentum.domain.repository.DoctorTreatmentReviewPostRepository;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
@@ -61,6 +58,14 @@ public class DoctorTreatmentReviewService {
         return doctorTreatmentReviewPostRepository.findAll()
                 .stream()
                 .map(GetAllDoctorTreatmentReviewPostResponse::of)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<GetDoctorTreatmentReviewPostTotalResponse> GetDoctorTreatmentReviewPostTotal() {
+        return doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(GetDoctorTreatmentReviewPostTotalResponse::of)
                 .toList();
     }
 

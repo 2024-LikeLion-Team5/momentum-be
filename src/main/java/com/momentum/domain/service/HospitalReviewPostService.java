@@ -89,6 +89,4 @@ public class HospitalReviewPostService {
                 .map(GetHospitalReviewPostTotalResponse::of)
                 .toList();
     }
-
-
 }

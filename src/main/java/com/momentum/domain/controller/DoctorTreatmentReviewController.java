@@ -61,6 +61,7 @@ public class DoctorTreatmentReviewController {
              response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         } else {
             // 검색어가 제공되지 않은 경우
+            // TODO: doctorTreatmentReviewService의 메서드 구현 (return: GetDoctorTreatmentReviewPostTotalResponse)
             response = null;
         }
 
