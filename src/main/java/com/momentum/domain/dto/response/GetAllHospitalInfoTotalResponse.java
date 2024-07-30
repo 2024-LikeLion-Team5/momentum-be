@@ -1,28 +1,36 @@
 package com.momentum.domain.dto.response;
 
-import com.momentum.domain.entity.HospitalInfo;
-import lombok.Builder;
-import lombok.Data;
+import java.util.List;
 
-@Data
-@Builder
-public class GetAllHospitalInfoTotalResponse {
+public record GetAllHospitalInfoTotalResponse(
+        long totalSearchedCount,
+        List<HospitalInfosResponse> getHospitalInfoResponses
+) {
 
-    private long id;
-    private String hospital;
-    private String address;
-    private double averageFacilityRating;
-    private double averageAtmosphereRating;
-    private double averageEmployeeRating;
+    public static GetAllHospitalInfoTotalResponse of(
+            long totalSearchedCount,
+            List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos
+    ) {
+        List<HospitalInfosResponse> hospitalInfosResponses = integrationHospitalSearchDtos.stream()
+                .map(it -> new HospitalInfosResponse(
+                        it.id(),
+                        it.hospital(),
+                        it.address(),
+                        it.averageFacilityRating(),
+                        it.averageAtmosphereRating(),
+                        it.averageEmployeeRating()
+                )).toList();
 
-    public static GetAllHospitalInfoTotalResponse of(HospitalInfo hospitalInfo) {
-        return GetAllHospitalInfoTotalResponse.builder()
-                .id(hospitalInfo.getId())
-                .hospital(hospitalInfo.getHospital())
-                .address(hospitalInfo.getAddress())
-                .averageFacilityRating(hospitalInfo.getAverageFacilityRating())
-                .averageAtmosphereRating(hospitalInfo.getAverageAtmosphereRating())
-                .averageEmployeeRating(hospitalInfo.getAverageEmployeeRating())
-                .build();
+        return new GetAllHospitalInfoTotalResponse(totalSearchedCount, hospitalInfosResponses);
+    }
+
+    private record HospitalInfosResponse(
+            long id,
+            String hospital,
+            String address,
+            double averageFacilityRating,
+            double averageAtmosphereRating,
+            double averageEmployeeRating
+    ) {
     }
 }

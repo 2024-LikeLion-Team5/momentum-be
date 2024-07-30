@@ -16,7 +16,7 @@ public class HospitalReviewPost extends Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
     private HospitalInfo hospitalInfo;
 

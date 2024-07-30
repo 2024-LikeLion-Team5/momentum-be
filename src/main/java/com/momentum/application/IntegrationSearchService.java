@@ -43,7 +43,8 @@ public class IntegrationSearchService {
         return GetCommunityPostTotalResponse.of(totalSearchedCount, integrationCommunitySearchDtos);
     }
 
-    // TODO: GetDoctorReviewIntegrationSearchResponse 수정
+    // 2024-07-31 기준 수정 완
+    // countAllByKeyword 메서드의 쿼리가 맞나 ?
     public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPostsTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
@@ -64,17 +65,15 @@ public class IntegrationSearchService {
                 .toList();
     }
 
-    // TODO: IntegrationHospitalSearchDto 수정
-    // TODO: GetHospitalIntegrationSearchResponse 수정
-    public GetHospitalReviewPostTotalResponse getHospitalReviewPostTotal(final String keyword) {
+    public GetAllHospitalInfoTotalResponse getHospitalReviewPostTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
-        List<IntegrationHospitalSearchDto> integrationDoctorReviewSearchDtos =
+        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos =
                 integrationSearchRepository.findAllByKeyword(keyword, pageable)
                         .stream()
                         .map(IntegrationHospitalSearchDto::from)
                         .toList();
-        return GetHospitalReviewPostTotalResponse.of(totalSearchedCount, (HospitalReviewPost) integrationDoctorReviewSearchDtos);
+        return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 
     public List<GetHospitalIntegrationSearchResponse> getHospitalPosts(final String keyword, final int page) {

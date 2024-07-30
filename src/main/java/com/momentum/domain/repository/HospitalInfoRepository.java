@@ -11,7 +11,11 @@ import java.util.List;
 @Repository
 public interface HospitalInfoRepository extends JpaRepository<HospitalInfo, Long> {
 
-    Page<HospitalInfo> findByHospitalContainingOrAddressContaining(String hospital, String address, Pageable pageable);
+//    Page<HospitalInfo> findByHospitalContainingOrAddressContaining(String hospital, String address, Pageable pageable);
+
+    List<HospitalInfo> findByHospitalContainingOrAddressContaining(String hospital, String address, Pageable pageable);
 
     HospitalInfo findByHospital(String hospital);
+
+    long countByHospitalContainingOrAddressContaining(String hospital, String address);
 }

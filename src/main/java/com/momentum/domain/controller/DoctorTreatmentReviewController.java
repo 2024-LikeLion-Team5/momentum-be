@@ -35,7 +35,7 @@ public class DoctorTreatmentReviewController {
         return ResponseEntity.ok(responses);
     }
 
-    // 문제는 바로 이곳입니다 ..
+    // 2024-07-31 push 기준 여전히 문제
     @GetMapping("/hospital-reviews/{hospitalId}/doctor-reviews/{doctorId}")
     public ResponseEntity<List<GetAllDoctorTreatmentReviewPostResponse>> getAllDoctorTreatmentReviewPost(
             @RequestParam(name = "page", defaultValue = "0")
@@ -44,26 +44,16 @@ public class DoctorTreatmentReviewController {
             @PathVariable("doctorId") Long doctorId
     ) {
         List<GetAllDoctorTreatmentReviewPostResponse> responses = doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(
-                page,
                 hospitalId,
                 doctorId);
-        return ResponseEntity.ok(doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(page, hospitalId, doctorId));
+        return ResponseEntity.ok(doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(hospitalId, doctorId));
     }
 
     @GetMapping("/total-reviews/doctors")
     public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-        GetDoctorTreatmentReviewPostTotalResponse response;
-
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            // 검색어가 제공된 경우
-             response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
-        } else {
-            // 검색어가 제공되지 않은 경우
-            // TODO: doctorTreatmentReviewService의 메서드 구현 (return: GetDoctorTreatmentReviewPostTotalResponse)
-            response = null;
-        }
+        GetDoctorTreatmentReviewPostTotalResponse response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
 
         return ResponseEntity.ok(response);
     }

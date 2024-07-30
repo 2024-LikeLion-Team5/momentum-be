@@ -1,10 +1,7 @@
 package com.momentum.presentation;
 
 import com.momentum.application.IntegrationSearchService;
-import com.momentum.domain.dto.response.GetDoctorReviewIntegrationSearchResponse;
-import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
-import com.momentum.domain.dto.response.GetHospitalIntegrationSearchResponse;
-import com.momentum.domain.dto.response.GetHospitalReviewPostTotalResponse;
+import com.momentum.domain.dto.response.*;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -59,9 +56,10 @@ public class IntegrationSearchController {
     }
 
     @GetMapping("/hospitals/integration")
-    public ResponseEntity<GetHospitalReviewPostTotalResponse> getHospitalReviewPostTotal(
-            @RequestParam(required = false) String keyword) {
-        GetHospitalReviewPostTotalResponse response = integrationSearchService.getHospitalReviewPostTotal(keyword);
+    public ResponseEntity<GetAllHospitalInfoTotalResponse> getHospitalReviewPostTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitalReviewPostTotal(keyword);
         return ResponseEntity.ok(response);
     }
 

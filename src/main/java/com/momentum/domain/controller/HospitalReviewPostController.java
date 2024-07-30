@@ -31,14 +31,13 @@ public class HospitalReviewPostController {
         return ResponseEntity.ok(responses);
     }
 
-    // 이곳도 약간 문제입니다 ..
     @GetMapping("/hospital-reviews/{hospitalId}/by-hospital-reviews")
-    public ResponseEntity<List<GetAllHospitalReviewPostResponse>> getAllHospitalReviewPost(
+    public ResponseEntity<List<GetHospitalReviewPostResponse>> getAllHospitalReviewPost(
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") final int page,
             @PathVariable("hospitalId") Long hospitalId
     ) {
-        List<GetAllHospitalReviewPostResponse> responses = hospitalReviewPostService.getAllHospitalReviewPosts(page, hospitalId);
+        List<GetHospitalReviewPostResponse> responses = hospitalReviewPostService.getAllHospitalReviewPosts(page, hospitalId);
         return ResponseEntity.ok(responses);
     }
 

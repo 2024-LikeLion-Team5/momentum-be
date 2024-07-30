@@ -23,7 +23,9 @@ public class HospitalReviewPostService {
     private final HospitalReviewPostRepository hospitalReviewPostRepository;
     private final HospitalInfoRepository hospitalInfoRepository;
 
+    @Transactional
     public Long createHospitalReviewPost(CreateHospitalReviewPostRequest request) {
+        // 이 부분 병원 정보로 해당 리뷰 글 찾는 게 맞나 ?
         HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital());
 
         HospitalReviewPost hospitalReviewPost = HospitalReviewPost.builder()
@@ -39,10 +41,12 @@ public class HospitalReviewPostService {
                 .dislikes(0)
                 .build();
 
+        // 해당 리뷰 글 찾았으면 제대로 업데이트 하는 건데 ?
         updateHospitalRatings(hospitalInfo);
         return hospitalReviewPostRepository.save(hospitalReviewPost).getId();
     }
 
+    @Transactional
     private void updateHospitalRatings(HospitalInfo hospitalInfo) {
         List<HospitalReviewPost> reviews = hospitalReviewPostRepository.findByHospitalInfo(hospitalInfo);
 
@@ -68,22 +72,20 @@ public class HospitalReviewPostService {
     }
 
     @Transactional(readOnly = true)
-    public List<GetAllHospitalReviewPostResponse> getAllHospitalReviewPosts(
+    public List<GetHospitalReviewPostResponse> getAllHospitalReviewPosts(
             final int page,
             final Long hospitalId
     ) {
-        // 목록 조회라 page 사용하고 병원 id로 병원 찾고 싶은데 조금 어렵습니다 ..
-        // 잠시 보류
+        // 2024-07-31 목록 조회라 page 사용하고 병원 id로 병원 찾는 로직 수정 완
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
-        return hospitalReviewPostRepository.findAll()
+        return hospitalReviewPostRepository.findById(hospitalId, pageable)
                 .stream()
-                .map(GetAllHospitalReviewPostResponse::of)
+                .map(GetHospitalReviewPostResponse::of)
                 .toList();
     }
 
     @Transactional(readOnly = true)
     public List<GetHospitalReviewPostTotalResponse> getHospitalReviewPostsTotal() {
-//        Pageable pageable = PageRequest.of(0, 6);
         return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(GetHospitalReviewPostTotalResponse::of)

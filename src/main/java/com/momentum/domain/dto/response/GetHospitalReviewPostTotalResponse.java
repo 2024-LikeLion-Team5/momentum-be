@@ -33,17 +33,4 @@ public class GetHospitalReviewPostTotalResponse {
                 .content(hospitalReviewPost.getContent())
                 .build();
     }
-
-    public static GetHospitalReviewPostTotalResponse of(long totalSearchedCount, HospitalReviewPost hospitalReviewPost) {
-        return GetHospitalReviewPostTotalResponse.builder()
-                .postId(hospitalReviewPost.getId())
-                .title(hospitalReviewPost.getTitle())
-                .createdAt(hospitalReviewPost.getCreatedAt())
-                .treatment(hospitalReviewPost.getTreatment())
-                .facilityRating(hospitalReviewPost.getFacilityRating())
-                .atmosphereRating(hospitalReviewPost.getAtmosphereRating())
-                .employeeRating(hospitalReviewPost.getEmployeeRating())
-                .content(hospitalReviewPost.getContent())
-                .build();
-    }
 }

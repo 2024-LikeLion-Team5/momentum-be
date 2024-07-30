@@ -7,25 +7,22 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public record IntegrationHospitalSearchDto(
-        long postId,
-        String title,
-
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
-        LocalDateTime createdAt,
-
-        long likeCount,
-        long hits,
-        PostType postType
+        long id,
+        String hospital,
+        String address,
+        double averageFacilityRating,
+        double averageAtmosphereRating,
+        double averageEmployeeRating
 ) {
 
     public static IntegrationHospitalSearchDto from(Object[] query) {
         return new IntegrationHospitalSearchDto(
                 ((Number) query[0]).longValue(),
                 (String) query[1],
-                ((Timestamp) query[2]).toLocalDateTime(),
-                ((Number) query[3]).longValue(),
-                ((Number) query[4]).longValue(),
-                PostType.valueOf((String) query[5])
+                (String) query[2],
+                ((Number) query[3]).doubleValue(),
+                ((Number) query[4]).doubleValue(),
+                ((Number)query[5]).doubleValue()
         );
     }
 }
