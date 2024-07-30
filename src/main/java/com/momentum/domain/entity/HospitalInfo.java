@@ -25,5 +25,5 @@ public class HospitalInfo {
     private double averageAtmosphereRating;
     private double averageEmployeeRating;
 
-    private int totalReviews;
+//    private int totalReviews;
 }

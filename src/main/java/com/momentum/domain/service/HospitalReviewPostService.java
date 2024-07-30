@@ -59,7 +59,7 @@ public class HospitalReviewPostService {
         hospitalInfo.setAverageFacilityRating(totalFacilityRating / reviewCount);
         hospitalInfo.setAverageAtmosphereRating(totalAtmosphereRating / reviewCount);
         hospitalInfo.setAverageEmployeeRating(totalEmployeeRating / reviewCount);
-        hospitalInfo.setTotalReviews(reviewCount);
+//        hospitalInfo.setTotalReviews(reviewCount);
 
         hospitalInfoRepository.save(hospitalInfo);
     }
