@@ -1,6 +1,8 @@
 package com.momentum.presentation;
 
 import com.momentum.application.IntegrationSearchService;
+import com.momentum.domain.dto.response.*;
+import com.momentum.domain.service.HospitalInfoService;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IntegrationSearchController {
 
     private final IntegrationSearchService integrationSearchService;
+    private final HospitalInfoService hospitalInfoService;
 
     @GetMapping("/communities")
     public ResponseEntity<List<GetCommunityIntegrationSearchResponse>> getCommunityPosts(
@@ -32,6 +35,43 @@ public class IntegrationSearchController {
     public ResponseEntity<GetCommunityPostTotalResponse> getCommunityPostsTotal(
             @RequestParam(required = false) String keyword) {
         GetCommunityPostTotalResponse response = integrationSearchService.getCommunityPostsTotal(keyword);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/doctor-reviews/integration")
+    public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        GetDoctorTreatmentReviewPostTotalResponse response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/doctor-reviews")
+    public ResponseEntity<List<IntegrationDoctorReviewSearchDto>> getDoctorReviewPosts(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(name = "page", defaultValue = "0")
+            @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") int page
+    ) {
+        List<IntegrationDoctorReviewSearchDto> responses =
+                integrationSearchService.getDoctorReviewPosts(keyword, page);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/hospitals/integration")
+    public ResponseEntity<GetAllHospitalInfoTotalResponse> getHospitalReviewPostTotal(
+            @RequestParam(required = false) String keyword
+    ) {
+        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitalReviewPostTotal(keyword);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/hospitals")
+    public ResponseEntity<GetAllHospitalInfoTotalResponse> getHospitalPosts(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(name = "page", defaultValue = "0")
+            @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") int page
+    ) {
+        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitaInfos(keyword, page);
         return ResponseEntity.ok(response);
     }
 }
