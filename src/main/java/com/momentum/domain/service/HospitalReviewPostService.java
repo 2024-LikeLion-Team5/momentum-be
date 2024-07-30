@@ -6,6 +6,8 @@ import com.momentum.domain.entity.HospitalInfo;
 import com.momentum.domain.entity.HospitalReviewPost;
 import com.momentum.domain.repository.HospitalInfoRepository;
 import com.momentum.domain.repository.HospitalReviewPostRepository;
+import com.momentum.exception.CommunityPostException;
+import com.momentum.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +43,7 @@ public class HospitalReviewPostService {
                 .dislikes(0)
                 .build();
 
-        // 해당 리뷰 글 찾았으면 제대로 업데이트 하는 건데 ?
+        // 해당 리뷰 글 찾았으면 제대로 업데이트
         updateHospitalRatings(hospitalInfo);
         return hospitalReviewPostRepository.save(hospitalReviewPost).getId();
     }
@@ -66,7 +68,7 @@ public class HospitalReviewPostService {
 
     public GetHospitalReviewPostResponse getHospitalReviewPost(Long postId) {
         HospitalReviewPost hospitalReviewPost = hospitalReviewPostRepository.findById(postId)
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException(CommunityPostException.NON_EXISTENT_HOSPITAL_REVIEW_POST));
         hospitalReviewPost.increaseHits();
         return GetHospitalReviewPostResponse.of(hospitalReviewPost);
     }

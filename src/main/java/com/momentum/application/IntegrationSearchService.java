@@ -76,6 +76,7 @@ public class IntegrationSearchService {
         return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 
+    // TODO: 왠지 수정 필요할 것 같은 부분 아닌가 ..
     public List<GetHospitalIntegrationSearchResponse> getHospitalPosts(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
         return integrationSearchRepository.findAllByKeyword(keyword, pageable)

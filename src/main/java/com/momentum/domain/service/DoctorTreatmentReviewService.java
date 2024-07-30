@@ -6,6 +6,8 @@ import com.momentum.domain.entity.DoctorTreatmentReviewPost;
 import com.momentum.domain.repository.DoctorTreatmentReviewPostRepository;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
+import com.momentum.exception.CommunityPostException;
+import com.momentum.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -44,7 +46,7 @@ public class DoctorTreatmentReviewService {
     @Transactional
     public GetDoctorTreatmentReviewPostResponse getDoctorTreatmentReviewPost(Long postId) {
         DoctorTreatmentReviewPost doctorTreatmentReviewPost = doctorTreatmentReviewPostRepository.findById(postId)
-                .orElseThrow();
+                .orElseThrow(() -> new NotFoundException(CommunityPostException.NON_EXISTENT_DOCTOR_TREATMENT_REVIEW_POST));
         doctorTreatmentReviewPost.increaseHits();
         return GetDoctorTreatmentReviewPostResponse.of(doctorTreatmentReviewPost);
     }
