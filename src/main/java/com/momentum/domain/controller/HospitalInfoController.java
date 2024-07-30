@@ -9,12 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/hospital-reviews")
 public class HospitalInfoController {
 
     private final HospitalInfoService hospitalInfoService;
 
-    @GetMapping("/{hospitalId}")
+    @GetMapping("/hospital-reviews/{hospitalId}")
     public ResponseEntity<GetHospitalInfoResponse> getHospitalInfo(@PathVariable Long hospitalId) {
         return hospitalInfoService.getHospitalInfoResponse(hospitalId)
                 .map(ResponseEntity::ok)
