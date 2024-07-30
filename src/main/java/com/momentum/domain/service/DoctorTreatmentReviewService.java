@@ -1,19 +1,15 @@
 package com.momentum.domain.service;
 
 import com.momentum.domain.dto.request.CreateDoctorTreatmentReviewPostRequest;
-import com.momentum.domain.dto.response.*;
+import com.momentum.domain.dto.response.GetAllDoctorTreatmentReviewPostResponse;
+import com.momentum.domain.dto.response.GetDoctorTreatmentReviewPostResponse;
 import com.momentum.domain.entity.DoctorTreatmentReviewPost;
 import com.momentum.domain.repository.DoctorTreatmentReviewPostRepository;
-import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
-import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
 import com.momentum.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -58,6 +54,7 @@ public class DoctorTreatmentReviewService {
     ) {
         // 목록 조회라 page 사용하고 병원 id로 병원 찾고 해당하는 의사도 의사 id로 찾고 싶은데 조금 어렵습니다 ..
         // 2024-07-31 기준 page 파라미터 삭제했습니다
+        // TODO: 정훈 님께 부탁드릴 곳
         return doctorTreatmentReviewPostRepository.findAll()
                 .stream()
                 .map(GetAllDoctorTreatmentReviewPostResponse::of)

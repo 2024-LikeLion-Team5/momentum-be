@@ -4,6 +4,8 @@ import com.momentum.domain.IntegrationSearchRepository;
 import com.momentum.domain.dto.response.*;
 import com.momentum.domain.entity.DoctorTreatmentReviewPost;
 import com.momentum.domain.entity.HospitalReviewPost;
+import com.momentum.domain.repository.HospitalInfoRepository;
+import com.momentum.domain.service.HospitalInfoService;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import com.momentum.dto.response.community.IntegrationCommunitySearchDto;
@@ -22,6 +24,7 @@ public class IntegrationSearchService {
     private static final int INITIAL_PAGE_SIZE = 10;
 
     private final IntegrationSearchRepository integrationSearchRepository;
+    private final HospitalInfoRepository hospitalInfoRepository;
 
     public List<GetCommunityIntegrationSearchResponse> getCommunityPosts(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
@@ -44,7 +47,7 @@ public class IntegrationSearchService {
     }
 
     // 2024-07-31 기준 수정 완
-    // countAllByKeyword 메서드의 쿼리가 맞나 ?
+    // TODO: countAllByKeyword 메서드의 쿼리를 부탁드리겠습니다
     public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPostsTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
         long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
@@ -56,12 +59,11 @@ public class IntegrationSearchService {
         return GetDoctorTreatmentReviewPostTotalResponse.of(totalSearchedCount, integrationDoctorReviewSearchDtos);
     }
 
-    public List<GetDoctorReviewIntegrationSearchResponse> getDoctorReviewPosts(final String keyword, final int page) {
+    public List<IntegrationDoctorReviewSearchDto> getDoctorReviewPosts(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
         return integrationSearchRepository.findAllByKeyword(keyword, pageable)
                 .stream()
                 .map(IntegrationDoctorReviewSearchDto::from)
-                .map(GetDoctorReviewIntegrationSearchResponse::from)
                 .toList();
     }
 
@@ -76,13 +78,15 @@ public class IntegrationSearchService {
         return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 
-    // TODO: 왠지 수정 필요할 것 같은 부분 아닌가 ..
-    public List<GetHospitalIntegrationSearchResponse> getHospitalPosts(final String keyword, final int page) {
+    public GetAllHospitalInfoTotalResponse getHospitaInfos(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
-        return integrationSearchRepository.findAllByKeyword(keyword, pageable)
-                .stream()
-                .map(IntegrationDoctorReviewSearchDto::from)
-                .map(GetHospitalIntegrationSearchResponse::from)
+
+        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(keyword, keyword);
+
+        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos = integrationSearchRepository
+                .findAllByKeyword(keyword, pageable)
+                .map(IntegrationHospitalSearchDto::from)
                 .toList();
+        return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 }

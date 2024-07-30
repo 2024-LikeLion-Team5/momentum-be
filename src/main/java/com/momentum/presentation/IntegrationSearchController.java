@@ -2,6 +2,7 @@ package com.momentum.presentation;
 
 import com.momentum.application.IntegrationSearchService;
 import com.momentum.domain.dto.response.*;
+import com.momentum.domain.service.HospitalInfoService;
 import com.momentum.dto.response.community.GetCommunityIntegrationSearchResponse;
 import com.momentum.dto.response.community.GetCommunityPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class IntegrationSearchController {
 
     private final IntegrationSearchService integrationSearchService;
+    private final HospitalInfoService hospitalInfoService;
 
     @GetMapping("/communities")
     public ResponseEntity<List<GetCommunityIntegrationSearchResponse>> getCommunityPosts(
@@ -45,12 +47,12 @@ public class IntegrationSearchController {
     }
 
     @GetMapping("/doctor-reviews")
-    public ResponseEntity<List<GetDoctorReviewIntegrationSearchResponse>> getDoctorReviewPosts(
+    public ResponseEntity<List<IntegrationDoctorReviewSearchDto>> getDoctorReviewPosts(
             @RequestParam(required = false) String keyword,
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") int page
     ) {
-        List<GetDoctorReviewIntegrationSearchResponse> responses =
+        List<IntegrationDoctorReviewSearchDto> responses =
                 integrationSearchService.getDoctorReviewPosts(keyword, page);
         return ResponseEntity.ok(responses);
     }
@@ -64,13 +66,12 @@ public class IntegrationSearchController {
     }
 
     @GetMapping("/hospitals")
-    public ResponseEntity<List<GetHospitalIntegrationSearchResponse>> getHospitalPosts(
+    public ResponseEntity<GetAllHospitalInfoTotalResponse> getHospitalPosts(
             @RequestParam(required = false) String keyword,
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") int page
     ) {
-        List<GetHospitalIntegrationSearchResponse> responses =
-                integrationSearchService.getHospitalPosts(keyword, page);
-        return ResponseEntity.ok(responses);
+        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitaInfos(keyword, page);
+        return ResponseEntity.ok(response);
     }
 }
