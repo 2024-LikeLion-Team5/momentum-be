@@ -1,12 +1,12 @@
 package com.momentum.community.presentation;
 
 import com.momentum.community.application.IntegrationSearchService;
+import com.momentum.community.dto.response.GetCommunityIntegrationSearchResponse;
+import com.momentum.community.dto.response.GetCommunityPostTotalResponse;
+import com.momentum.review.application.HospitalInfoService;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
 import com.momentum.review.dto.response.IntegrationDoctorReviewSearchDto;
-import com.momentum.review.application.HospitalInfoService;
-import com.momentum.community.dto.response.GetCommunityIntegrationSearchResponse;
-import com.momentum.community.dto.response.GetCommunityPostTotalResponse;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

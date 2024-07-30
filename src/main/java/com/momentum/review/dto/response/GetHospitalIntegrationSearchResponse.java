@@ -1,7 +1,6 @@
 package com.momentum.review.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.time.LocalDateTime;
 
 public record GetHospitalIntegrationSearchResponse(

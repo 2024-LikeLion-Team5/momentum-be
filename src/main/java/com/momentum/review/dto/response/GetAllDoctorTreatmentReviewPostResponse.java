@@ -1,11 +1,12 @@
 package com.momentum.review.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.momentum.community.domain.vo.Disease;
 import com.momentum.review.domain.DoctorTreatmentReviewPost;
+import com.momentum.review.domain.vo.AgeGroup;
+import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -15,10 +16,10 @@ public class GetAllDoctorTreatmentReviewPostResponse {
     private String title;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
     private LocalDateTime createdAt;
-    private String disease;
+    private Disease disease;
     private String treatment;
     private String doctor;
-    private int ageGroup;
+    private AgeGroup ageGroup;
     private double rating;
     private String content;
 

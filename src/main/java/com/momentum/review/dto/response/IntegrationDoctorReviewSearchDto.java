@@ -1,8 +1,10 @@
 package com.momentum.review.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.momentum.community.domain.vo.Disease;
 import com.momentum.post.domain.vo.PostType;
-
+import com.momentum.review.domain.DoctorTreatmentReviewPost;
+import com.momentum.review.domain.vo.AgeGroup;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -11,11 +13,10 @@ public record IntegrationDoctorReviewSearchDto(
         String title,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
         LocalDateTime createdAt,
-        String disease,
+        Disease disease,
         String treatment,
-
         String doctor,
-        int ageGroup,
+        AgeGroup ageGroup,
         double rating,
         String content,
         long likeCount,
@@ -23,15 +24,32 @@ public record IntegrationDoctorReviewSearchDto(
         PostType postType
 ) {
 
+    public static IntegrationDoctorReviewSearchDto from(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
+        return new IntegrationDoctorReviewSearchDto(
+                doctorTreatmentReviewPost.getId(),
+                doctorTreatmentReviewPost.getTitle(),
+                doctorTreatmentReviewPost.getCreatedAt(),
+                doctorTreatmentReviewPost.getDisease(),
+                doctorTreatmentReviewPost.getTreatment(),
+                doctorTreatmentReviewPost.getDoctor(),
+                doctorTreatmentReviewPost.getAgeGroup(),
+                doctorTreatmentReviewPost.getRating(),
+                doctorTreatmentReviewPost.getContent(),
+                doctorTreatmentReviewPost.getLikes(),
+                doctorTreatmentReviewPost.getHits(),
+                doctorTreatmentReviewPost.getPostType()
+        );
+    }
+
     public static IntegrationDoctorReviewSearchDto from(Object[] query) {
         return new IntegrationDoctorReviewSearchDto(
                 ((Number) query[0]).longValue(),
                 (String) query[1],
                 ((Timestamp) query[2]).toLocalDateTime(),
-                ((String) query[3]),
+                ((Disease) query[3]),
                 ((String) query[4]),
                 ((String) query[5]),
-                ((Number) query[6]).intValue(),
+                ((AgeGroup) query[6]),
                 ((Number) query[7]).doubleValue(),
                 ((String) query[8]),
                 ((Number) query[9]).longValue(),

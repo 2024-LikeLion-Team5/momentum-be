@@ -1,11 +1,11 @@
 package com.momentum.review.presentation;
 
 import com.momentum.community.application.IntegrationSearchService;
+import com.momentum.review.application.DoctorTreatmentReviewService;
 import com.momentum.review.dto.request.CreateDoctorTreatmentReviewPostRequest;
 import com.momentum.review.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
-import com.momentum.review.application.DoctorTreatmentReviewService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
@@ -60,9 +60,11 @@ public class DoctorTreatmentReviewController {
     public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-        GetDoctorTreatmentReviewPostTotalResponse response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(
-                keyword);
+        GetDoctorTreatmentReviewPostTotalResponse response;
+        if (keyword != null) {
 
+        }
+        response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         return ResponseEntity.ok(response);
     }
 }

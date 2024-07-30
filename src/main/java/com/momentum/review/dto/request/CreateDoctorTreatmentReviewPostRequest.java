@@ -1,5 +1,7 @@
 package com.momentum.review.dto.request;
 
+import com.momentum.community.domain.vo.Disease;
+import com.momentum.review.domain.vo.AgeGroup;
 import jakarta.validation.constraints.NotBlank;
 
 public record CreateDoctorTreatmentReviewPostRequest(
@@ -7,14 +9,12 @@ public record CreateDoctorTreatmentReviewPostRequest(
         @NotBlank(message = "병원명이 존재하지 않습니다.")
         String hospital,
 
-        @NotBlank(message = "질환명이 존재하지 않습니다.")
-        String disease,
+        Disease disease,
 
         @NotBlank(message = "진단명이 존재하지 않습니다.")
         String treatment,
 
-        @NotBlank(message = "연령대가 존재하지 않습니다.")
-        int ageGroup,
+        AgeGroup ageGroup,
 
         @NotBlank(message = "의사명이 존재하지 않습니다.")
         String doctor,

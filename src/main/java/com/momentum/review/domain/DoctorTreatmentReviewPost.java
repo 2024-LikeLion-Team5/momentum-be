@@ -1,12 +1,20 @@
 package com.momentum.review.domain;
 
+import com.momentum.community.domain.vo.Disease;
 import com.momentum.post.domain.Post;
 import com.momentum.post.domain.vo.PostType;
+import com.momentum.review.domain.vo.AgeGroup;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
@@ -19,10 +27,16 @@ public class DoctorTreatmentReviewPost extends Post {
     private Long id;
 
     private String hospital;
-    private String disease;
+
+    private Disease disease;
+
     private String treatment;
-    private int ageGroup;
+
+    @Enumerated(value = EnumType.STRING)
+    private AgeGroup ageGroup;
+
     private String doctor;
+
     private double rating;
 
     @Builder
@@ -34,9 +48,9 @@ public class DoctorTreatmentReviewPost extends Post {
             final long dislikes,
             final PostType postType,
             final String hospital,
-            final String disease,
+            final Disease disease,
             final String treatment,
-            final int ageGroup,
+            final AgeGroup ageGroup,
             final String doctor,
             final double rating
     ) {

@@ -1,7 +1,8 @@
 package com.momentum.review.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.momentum.community.domain.vo.Disease;
+import com.momentum.review.domain.vo.AgeGroup;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public record GetDoctorTreatmentReviewPostTotalResponse(
 
     public static GetDoctorTreatmentReviewPostTotalResponse of(
             long totalSearchedCount,
-            List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewSearchDtos
+            List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewResponsSearchDtos
     ) {
-        List<DoctorTreatmentReviewPostsResponse> doctorTreatmentReviewPostsResponses = integrationDoctorReviewSearchDtos.stream()
+        List<DoctorTreatmentReviewPostsResponse> doctorTreatmentReviewPostsResponses = integrationDoctorReviewResponsSearchDtos.stream()
                 .map(it -> new DoctorTreatmentReviewPostsResponse(
                         it.postId(),
                         it.title(),
@@ -35,10 +36,10 @@ public record GetDoctorTreatmentReviewPostTotalResponse(
             String title,
             @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
             LocalDateTime createdAt,
-            String disease,
+            Disease disease,
             String treatment,
             String doctor,
-            int ageGroup,
+            AgeGroup ageGroup,
             double rating,
             String content
     ) {
