@@ -32,7 +32,6 @@ public class HospitalReviewPostController {
     @GetMapping("/hospital-reviews/by-hospital-reviews/{postId}")
     public ResponseEntity<GetHospitalReviewPostResponse> getHospitalReviewPost(@PathVariable Long postId) {
         GetHospitalReviewPostResponse responses = hospitalReviewPostService.getHospitalReviewPost(postId);
-
         return ResponseEntity.ok(responses);
     }
 

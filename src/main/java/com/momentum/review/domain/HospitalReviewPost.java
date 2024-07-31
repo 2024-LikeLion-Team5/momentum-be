@@ -2,8 +2,19 @@ package com.momentum.review.domain;
 
 import com.momentum.post.domain.Post;
 import com.momentum.post.domain.vo.PostType;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -17,7 +28,7 @@ public class HospitalReviewPost extends Post {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hospital_id")
+    @JoinColumn(name = "hospital_info_id")
     private HospitalInfo hospitalInfo;
 
     private String treatment;

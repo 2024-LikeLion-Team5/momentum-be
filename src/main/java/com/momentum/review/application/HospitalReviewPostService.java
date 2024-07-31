@@ -64,7 +64,6 @@ public class HospitalReviewPostService {
             final int page,
             final Long hospitalId
     ) {
-        // 2024-07-31 목록 조회라 page 사용하고 병원 id로 병원 찾는 로직 수정 완
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
         return hospitalReviewPostRepository.findById(hospitalId, pageable)
                 .stream()
