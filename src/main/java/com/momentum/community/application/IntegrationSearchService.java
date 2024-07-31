@@ -99,7 +99,8 @@ public class IntegrationSearchService {
     public GetAllHospitalInfoTotalResponse getHospitaInfos(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
 
-        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(keyword, keyword);
+        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(
+                keyword, keyword);
 
         List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos = integrationSearchRepository
                 .findAllByKeyword(keyword, pageable)

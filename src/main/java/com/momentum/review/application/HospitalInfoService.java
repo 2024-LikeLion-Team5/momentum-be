@@ -1,20 +1,20 @@
 package com.momentum.review.application;
 
 import com.momentum.community.domain.IntegrationSearchRepository;
-import com.momentum.review.domain.HospitalInfo;
 import com.momentum.review.domain.HospitalInfoRepository;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.review.dto.response.GetHospitalInfoResponse;
 import com.momentum.review.dto.response.IntegrationHospitalSearchDto;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HospitalInfoService {
 
@@ -26,38 +26,15 @@ public class HospitalInfoService {
                 .map(GetHospitalInfoResponse::of);
     }
 
-    /**
-     * @param keyword : 병원명 또는 지역
-     * @return : 병원명 또는 지역에 따른 후기
-     */
     public GetAllHospitalInfoTotalResponse getHospitalInfoTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
-        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(keyword, keyword);
-
-//         무시할 부분
-//        List<HospitalInfo> hospitalInfos = hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword, pageable);
-//
-//        // totalSearchedCount 찾기, 여기 메서드 통합 ?
-//        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos = hospitalInfos.stream()
-//                .map(this::convertToIntegrationHospitalSearchDto)
-//                .toList();
-//         무시한 부분
-
-        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos = integrationSearchRepository
-                .findAllByKeyword(keyword, pageable)
-                .map(IntegrationHospitalSearchDto::from)
-                .toList();
+        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(
+                keyword, keyword);
+        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos =
+                hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword, pageable)
+                        .stream()
+                        .map(IntegrationHospitalSearchDto::from)
+                        .toList();
         return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
-    }
-
-    private IntegrationHospitalSearchDto convertToIntegrationHospitalSearchDto(HospitalInfo hospitalInfo) {
-        return new IntegrationHospitalSearchDto(
-                hospitalInfo.getId(),
-                hospitalInfo.getHospital(),
-                hospitalInfo.getAddress(),
-                hospitalInfo.getAverageFacilityRating(),
-                hospitalInfo.getAverageAtmosphereRating(),
-                hospitalInfo.getAverageEmployeeRating()
-        );
     }
 }

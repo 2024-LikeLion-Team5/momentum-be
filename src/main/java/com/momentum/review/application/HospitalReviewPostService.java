@@ -1,23 +1,23 @@
 package com.momentum.review.application;
 
-import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
-import com.momentum.review.domain.HospitalInfo;
-import com.momentum.review.domain.HospitalReviewPost;
-import com.momentum.review.domain.HospitalInfoRepository;
-import com.momentum.review.domain.HospitalReviewPostRepository;
 import com.momentum.community.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
+import com.momentum.review.domain.HospitalInfo;
+import com.momentum.review.domain.HospitalInfoRepository;
+import com.momentum.review.domain.HospitalReviewPost;
+import com.momentum.review.domain.HospitalReviewPostRepository;
+import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.review.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostTotalResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class HospitalReviewPostService {
 
@@ -48,8 +48,7 @@ public class HospitalReviewPostService {
         updateHospitalRatings(hospitalInfo);
         return hospitalReviewPostRepository.save(hospitalReviewPost).getId();
     }
-
-    @Transactional
+    
     private void updateHospitalRatings(HospitalInfo hospitalInfo) {
         List<HospitalReviewPost> reviews = hospitalReviewPostRepository.findByHospitalInfo(hospitalInfo);
 
@@ -74,7 +73,6 @@ public class HospitalReviewPostService {
         return GetHospitalReviewPostResponse.of(hospitalReviewPost);
     }
 
-    @Transactional(readOnly = true)
     public List<GetHospitalReviewPostResponse> getAllHospitalReviewPosts(
             final int page,
             final Long hospitalId
@@ -87,7 +85,6 @@ public class HospitalReviewPostService {
                 .toList();
     }
 
-    @Transactional(readOnly = true)
     public List<GetHospitalReviewPostTotalResponse> getHospitalReviewPostsTotal() {
         return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc()
                 .stream()

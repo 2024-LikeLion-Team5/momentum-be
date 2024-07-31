@@ -1,5 +1,7 @@
 package com.momentum.review.dto.response;
 
+import com.momentum.review.domain.HospitalInfo;
+
 public record IntegrationHospitalSearchDto(
         long id,
         String hospital,
@@ -8,6 +10,17 @@ public record IntegrationHospitalSearchDto(
         double averageAtmosphereRating,
         double averageEmployeeRating
 ) {
+
+    public static IntegrationHospitalSearchDto from(HospitalInfo hospitalInfo) {
+        return new IntegrationHospitalSearchDto(
+                hospitalInfo.getId(),
+                hospitalInfo.getHospital(),
+                hospitalInfo.getAddress(),
+                hospitalInfo.getAverageFacilityRating(),
+                hospitalInfo.getAverageAtmosphereRating(),
+                hospitalInfo.getAverageEmployeeRating()
+        );
+    }
 
     public static IntegrationHospitalSearchDto from(Object[] query) {
         return new IntegrationHospitalSearchDto(

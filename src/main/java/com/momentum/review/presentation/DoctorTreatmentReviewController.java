@@ -60,11 +60,9 @@ public class DoctorTreatmentReviewController {
     public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-        GetDoctorTreatmentReviewPostTotalResponse response;
-        if (keyword != null) {
 
-        }
-        response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
+        GetDoctorTreatmentReviewPostTotalResponse response =
+                integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         return ResponseEntity.ok(response);
     }
 }
