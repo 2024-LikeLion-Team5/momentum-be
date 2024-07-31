@@ -1,12 +1,13 @@
 package com.momentum.review.application;
 
-import com.momentum.community.domain.IntegrationSearchRepository;
+import com.momentum.global.exception.NotFoundException;
+import com.momentum.review.domain.HospitalInfo;
 import com.momentum.review.domain.HospitalInfoRepository;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.review.dto.response.GetHospitalInfoResponse;
 import com.momentum.review.dto.response.IntegrationHospitalSearchDto;
+import com.momentum.review.exception.HospitalInfoException;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,12 +19,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class HospitalInfoService {
 
-    private final IntegrationSearchRepository integrationSearchRepository;
     private final HospitalInfoRepository hospitalInfoRepository;
 
-    public Optional<GetHospitalInfoResponse> getHospitalInfoResponse(Long hospitalId) {
-        return hospitalInfoRepository.findById(hospitalId)
-                .map(GetHospitalInfoResponse::of);
+    public GetHospitalInfoResponse getHospitalInfoResponse(Long hospitalId) {
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findById(hospitalId)
+                .orElseThrow(() -> new NotFoundException(HospitalInfoException.NON_EXISTENT_HOSPITAL_INFORMATION));
+        return GetHospitalInfoResponse.from(hospitalInfo);
     }
 
     public GetAllHospitalInfoTotalResponse getHospitalInfoTotal(final String keyword) {

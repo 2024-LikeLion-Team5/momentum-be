@@ -1,11 +1,14 @@
 package com.momentum.review.presentation;
 
+import com.momentum.review.application.HospitalInfoService;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.review.dto.response.GetHospitalInfoResponse;
-import com.momentum.review.application.HospitalInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,9 +18,8 @@ public class HospitalInfoController {
 
     @GetMapping("/hospital-reviews/{hospitalId}")
     public ResponseEntity<GetHospitalInfoResponse> getHospitalInfo(@PathVariable Long hospitalId) {
-        return hospitalInfoService.getHospitalInfoResponse(hospitalId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        GetHospitalInfoResponse response = hospitalInfoService.getHospitalInfoResponse(hospitalId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/hospital-search/hospitals")

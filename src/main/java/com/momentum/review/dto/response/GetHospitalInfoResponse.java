@@ -15,7 +15,7 @@ public class GetHospitalInfoResponse {
     private double averageAtmosphereRating;
     private double averageEmployeeRating;
 
-    public static GetHospitalInfoResponse of(HospitalInfo hospitalInfo) {
+    public static GetHospitalInfoResponse from(HospitalInfo hospitalInfo) {
         return GetHospitalInfoResponse.builder()
                 .hospital(hospitalInfo.getHospital())
                 .address(hospitalInfo.getAddress())
