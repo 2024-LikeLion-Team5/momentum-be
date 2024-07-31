@@ -58,4 +58,12 @@ public abstract class Post extends BaseEntity {
     public void increaseHits() {
         this.hits++;
     }
+
+    public void increaseLikes() {
+        this.likes++;
+    }
+
+    public void increaseDislikes() {
+        this.dislikes++;
+    }
 }

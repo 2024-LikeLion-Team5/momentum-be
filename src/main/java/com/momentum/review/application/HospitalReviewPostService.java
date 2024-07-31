@@ -65,7 +65,7 @@ public class HospitalReviewPostService {
             final Long hospitalId
     ) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
-        return hospitalReviewPostRepository.findById(hospitalId, pageable)
+        return hospitalReviewPostRepository.findAllByHospitalInfoId(hospitalId, pageable)
                 .stream()
                 .map(GetHospitalReviewPostResponse::of)
                 .toList();
