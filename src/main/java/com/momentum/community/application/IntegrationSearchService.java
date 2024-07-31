@@ -55,8 +55,10 @@ public class IntegrationSearchService {
         List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewResponseSearchDtos;
         if (keyword == null) {
             integrationDoctorReviewResponseSearchDtos =
-                    doctorTreatmentReviewPostRepository.findAllByTitleAndContentContainingOrderByCreatedAtDesc(keyword)
-                            .stream()
+                    doctorTreatmentReviewPostRepository.findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
+                                    keyword,
+                                    keyword
+                            ).stream()
                             .map(IntegrationDoctorReviewSearchDto::from)
                             .toList();
             return GetDoctorTreatmentReviewPostTotalResponse.of(
@@ -66,8 +68,10 @@ public class IntegrationSearchService {
         }
 
         integrationDoctorReviewResponseSearchDtos =
-                doctorTreatmentReviewPostRepository.findAllByTitleAndContentContainingOrderByCreatedAtDesc(keyword)
-                        .stream()
+                doctorTreatmentReviewPostRepository.findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
+                                keyword,
+                                keyword
+                        ).stream()
                         .map(IntegrationDoctorReviewSearchDto::from)
                         .limit(3)
                         .toList();

@@ -3,9 +3,7 @@ package com.momentum.review.domain;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface DoctorTreatmentReviewPostRepository extends JpaRepository<DoctorTreatmentReviewPost, Long> {
 
     @Query("select count(*) from DoctorTreatmentReviewPost dtrp " +
@@ -13,5 +11,8 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
             "OR LOWER(dtrp.content) LIKE LOWER(CONCAT('%', :keyword, '%')) ")
     long countAllByTitleAndContentContainingOrderByCreatedAtDesc(String keyword);
 
-    List<DoctorTreatmentReviewPost> findAllByTitleAndContentContainingOrderByCreatedAtDesc(String keyword);
+    List<DoctorTreatmentReviewPost> findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
+            String title,
+            String content
+    );
 }
