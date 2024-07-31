@@ -28,9 +28,6 @@ public class HospitalReviewPostService {
 
     @Transactional
     public Long createHospitalReviewPost(CreateHospitalReviewPostRequest request) {
-        // 이 부분 병원 정보로 해당 리뷰 글 찾는 게 맞나 ?
-        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital());
-
         HospitalReviewPost hospitalReviewPost = HospitalReviewPost.builder()
                 .treatment(request.treatment())
                 .hospital(request.hospital())
@@ -44,26 +41,16 @@ public class HospitalReviewPostService {
                 .dislikes(0)
                 .build();
 
-        // 해당 리뷰 글 찾았으면 제대로 업데이트
-        updateHospitalRatings(hospitalInfo);
+        // 평점 업데이트
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital());
+        long reviewCounts = hospitalReviewPostRepository.countAllByHospitalInfo(hospitalInfo);
+        hospitalInfo.updateRatings(
+                reviewCounts,
+                request.facilityRating(),
+                request.atmosphereRating(),
+                request.employeeRating()
+        );
         return hospitalReviewPostRepository.save(hospitalReviewPost).getId();
-    }
-    
-    private void updateHospitalRatings(HospitalInfo hospitalInfo) {
-        List<HospitalReviewPost> reviews = hospitalReviewPostRepository.findByHospitalInfo(hospitalInfo);
-
-        double totalFacilityRating = reviews.stream().mapToDouble(HospitalReviewPost::getFacilityRating).sum();
-        double totalAtmosphereRating = reviews.stream().mapToDouble(HospitalReviewPost::getAtmosphereRating).sum();
-        double totalEmployeeRating = reviews.stream().mapToDouble(HospitalReviewPost::getEmployeeRating).sum();
-
-        int reviewCount = reviews.size();
-
-        hospitalInfo.setAverageFacilityRating(totalFacilityRating / reviewCount);
-        hospitalInfo.setAverageAtmosphereRating(totalAtmosphereRating / reviewCount);
-        hospitalInfo.setAverageEmployeeRating(totalEmployeeRating / reviewCount);
-//        hospitalInfo.setTotalReviews(reviewCount);
-
-        hospitalInfoRepository.save(hospitalInfo);
     }
 
     public GetHospitalReviewPostResponse getHospitalReviewPost(Long postId) {

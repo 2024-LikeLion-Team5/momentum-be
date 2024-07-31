@@ -4,7 +4,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @Getter
@@ -25,5 +29,17 @@ public class HospitalInfo {
     private double averageAtmosphereRating;
     private double averageEmployeeRating;
 
-//    private int totalReviews;
+    public void updateRatings(
+            long reviewCounts,
+            double facilityRating,
+            double atmosphereRating,
+            double employeeRating
+    ) {
+        this.averageFacilityRating =
+                ((this.averageFacilityRating * reviewCounts) + facilityRating) / (reviewCounts + 1);
+        this.averageAtmosphereRating =
+                ((this.averageAtmosphereRating * reviewCounts) + atmosphereRating) / (reviewCounts + 1);
+        this.averageEmployeeRating =
+                ((this.averageEmployeeRating * reviewCounts) + employeeRating) / (reviewCounts + 1);
+    }
 }
