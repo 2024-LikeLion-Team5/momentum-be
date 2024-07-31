@@ -28,18 +28,19 @@ public class DoctorTreatmentReviewController {
 
     @PostMapping("/hospital-reviews/doctor-reviews")
     public ResponseEntity<Void> createDoctorTreatmentReviewPost(
-            @Valid @RequestBody CreateDoctorTreatmentReviewPostRequest request) {
+            @Valid @RequestBody CreateDoctorTreatmentReviewPostRequest request
+    ) {
         Long postId = doctorTreatmentReviewService.createDoctorTreatmentReviewPost(request);
         return ResponseEntity.created(URI.create("/posts/" + postId)).build();
     }
 
     @GetMapping("/hospital-reviews/doctor-reviews/{postId}")
     public ResponseEntity<GetDoctorTreatmentReviewPostResponse> getDoctorTreatmentReviewPost(
-            @PathVariable Long postId) {
-        GetDoctorTreatmentReviewPostResponse responses = doctorTreatmentReviewService.getDoctorTreatmentReviewPost(
-                postId);
-
-        return ResponseEntity.ok(responses);
+            @PathVariable Long postId
+    ) {
+        GetDoctorTreatmentReviewPostResponse response =
+                doctorTreatmentReviewService.getDoctorTreatmentReviewPost(postId);
+        return ResponseEntity.ok(response);
     }
 
     // 2024-07-31 push 기준 여전히 문제

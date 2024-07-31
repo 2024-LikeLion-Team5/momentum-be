@@ -1,17 +1,16 @@
 package com.momentum.review.application;
 
+import com.momentum.community.exception.CommunityPostException;
+import com.momentum.global.exception.NotFoundException;
+import com.momentum.review.domain.DoctorTreatmentReviewPost;
+import com.momentum.review.domain.DoctorTreatmentReviewPostRepository;
 import com.momentum.review.dto.request.CreateDoctorTreatmentReviewPostRequest;
 import com.momentum.review.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostResponse;
-import com.momentum.review.domain.DoctorTreatmentReviewPost;
-import com.momentum.review.domain.DoctorTreatmentReviewPostRepository;
-import com.momentum.community.exception.CommunityPostException;
-import com.momentum.global.exception.NotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -42,10 +41,11 @@ public class DoctorTreatmentReviewService {
     @Transactional
     public GetDoctorTreatmentReviewPostResponse getDoctorTreatmentReviewPost(Long postId) {
         DoctorTreatmentReviewPost doctorTreatmentReviewPost = doctorTreatmentReviewPostRepository.findById(postId)
-                .orElseThrow(
-                        () -> new NotFoundException(CommunityPostException.NON_EXISTENT_DOCTOR_TREATMENT_REVIEW_POST));
+                .orElseThrow(() ->
+                        new NotFoundException(CommunityPostException.NON_EXISTENT_DOCTOR_TREATMENT_REVIEW_POST)
+                );
         doctorTreatmentReviewPost.increaseHits();
-        return GetDoctorTreatmentReviewPostResponse.of(doctorTreatmentReviewPost);
+        return GetDoctorTreatmentReviewPostResponse.from(doctorTreatmentReviewPost);
     }
 
     @Transactional(readOnly = true)

@@ -10,7 +10,8 @@ public enum PostType {
     SURGERY_REVIEW,
     DAILY,
     DOCTOR_REVIEW,
-    HOSPITAL_REVIEW;
+    HOSPITAL_REVIEW,
+    ;
 
     public static PostType getCommunityType(String communityType) {
         return Arrays.stream(PostType.values())

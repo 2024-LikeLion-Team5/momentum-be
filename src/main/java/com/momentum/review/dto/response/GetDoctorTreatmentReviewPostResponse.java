@@ -25,7 +25,7 @@ public class GetDoctorTreatmentReviewPostResponse {
     private String doctorName;
     private String content;
 
-    public static GetDoctorTreatmentReviewPostResponse of(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
+    public static GetDoctorTreatmentReviewPostResponse from(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
         return GetDoctorTreatmentReviewPostResponse.builder()
                 .title(doctorTreatmentReviewPost.getTitle())
                 .hits(doctorTreatmentReviewPost.getHits())
