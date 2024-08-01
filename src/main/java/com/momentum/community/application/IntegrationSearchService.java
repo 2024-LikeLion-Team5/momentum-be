@@ -91,25 +91,28 @@ public class IntegrationSearchService {
 
     public GetAllHospitalInfoTotalResponse getHospitalReviewPostTotal(final String keyword) {
         Pageable pageable = PageRequest.of(0, 3);
-        long totalSearchedCount = integrationSearchRepository.countAllByKeyword(keyword);
+
+        long totalSearchedCount =
+                hospitalInfoRepository.countByHospitalContainingOrAddressContaining(keyword, keyword);
+
         List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos =
-                integrationSearchRepository.findAllByKeyword(keyword, pageable)
+                hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword, pageable)
                         .stream()
                         .map(IntegrationHospitalSearchDto::from)
                         .toList();
         return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 
-    public GetAllHospitalInfoTotalResponse getHospitaInfos(final String keyword, final int page) {
+    public GetAllHospitalInfoTotalResponse getHospitalInfos(final String keyword, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
 
-        long totalSearchedCount = hospitalInfoRepository.countByHospitalContainingOrAddressContaining(
-                keyword, keyword);
+        long totalSearchedCount =
+                hospitalInfoRepository.countByHospitalContainingOrAddressContaining(keyword, keyword);
 
-        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos = integrationSearchRepository
-                .findAllByKeyword(keyword, pageable)
-                .map(IntegrationHospitalSearchDto::from)
-                .toList();
+        List<IntegrationHospitalSearchDto> integrationHospitalSearchDtos =
+                hospitalInfoRepository.findByHospitalContainingOrAddressContaining(keyword, keyword, pageable)
+                        .map(IntegrationHospitalSearchDto::from)
+                        .toList();
         return GetAllHospitalInfoTotalResponse.of(totalSearchedCount, integrationHospitalSearchDtos);
     }
 }

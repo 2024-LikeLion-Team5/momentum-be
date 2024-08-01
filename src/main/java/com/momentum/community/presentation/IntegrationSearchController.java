@@ -74,7 +74,7 @@ public class IntegrationSearchController {
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0이상인 정수만 가능합니다.") int page
     ) {
-        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitaInfos(keyword, page);
+        GetAllHospitalInfoTotalResponse response = integrationSearchService.getHospitalInfos(keyword, page);
         return ResponseEntity.ok(response);
     }
 }
