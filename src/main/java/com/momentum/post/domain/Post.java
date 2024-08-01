@@ -3,6 +3,8 @@ package com.momentum.post.domain;
 import com.momentum.common.entity.BaseEntity;
 import com.momentum.post.domain.vo.PostType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public abstract class Post extends BaseEntity {
 
     private boolean isNotice;
 
+    @Enumerated(value = EnumType.STRING)
     private PostType postType;
 
     protected Post(

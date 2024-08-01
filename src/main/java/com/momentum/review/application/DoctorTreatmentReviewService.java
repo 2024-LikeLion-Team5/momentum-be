@@ -15,9 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class DoctorTreatmentReviewService {
-
-    private static final int INITIAL_PAGE_SIZE = 10;
-
+    
     private final DoctorTreatmentReviewPostRepository doctorTreatmentReviewPostRepository;
 
     @Transactional

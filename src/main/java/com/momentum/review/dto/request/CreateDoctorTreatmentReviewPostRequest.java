@@ -19,7 +19,6 @@ public record CreateDoctorTreatmentReviewPostRequest(
         @NotBlank(message = "의사명이 존재하지 않습니다.")
         String doctor,
 
-        @NotBlank(message = "평점이 존재하지 않습니다.")
         double rating,
 
         @NotBlank(message = "제목이 존재하지 않습니다.")
