@@ -4,6 +4,7 @@ import com.momentum.community.domain.IntegrationSearchRepository;
 import com.momentum.community.dto.response.GetCommunityIntegrationSearchResponse;
 import com.momentum.community.dto.response.GetCommunityPostTotalResponse;
 import com.momentum.community.dto.response.IntegrationCommunitySearchDto;
+import com.momentum.review.domain.DoctorTreatmentReviewPost;
 import com.momentum.review.domain.DoctorTreatmentReviewPostRepository;
 import com.momentum.review.domain.HospitalInfoRepository;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
@@ -54,30 +55,22 @@ public class IntegrationSearchService {
 
         List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewResponseSearchDtos;
         if (keyword == null) {
-            integrationDoctorReviewResponseSearchDtos =
-                    doctorTreatmentReviewPostRepository.findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
-                                    keyword,
-                                    keyword
-                            ).stream()
-                            .map(IntegrationDoctorReviewSearchDto::from)
-                            .toList();
+            List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts = doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAt();
             return GetDoctorTreatmentReviewPostTotalResponse.of(
                     totalSearchedCount,
-                    integrationDoctorReviewResponseSearchDtos
+                    doctorTreatmentReviewPosts
             );
         }
 
-        integrationDoctorReviewResponseSearchDtos =
-                doctorTreatmentReviewPostRepository.findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
-                                keyword,
-                                keyword
-                        ).stream()
-                        .map(IntegrationDoctorReviewSearchDto::from)
-                        .limit(3)
-                        .toList();
+        List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts = doctorTreatmentReviewPostRepository.findAllByTitleContainingOrContentContainingOrderByCreatedAtDesc(
+                        keyword,
+                        keyword
+                ).stream()
+                .limit(3)
+                .toList();
         return GetDoctorTreatmentReviewPostTotalResponse.of(
                 totalSearchedCount,
-                integrationDoctorReviewResponseSearchDtos
+                doctorTreatmentReviewPosts
         );
     }
 

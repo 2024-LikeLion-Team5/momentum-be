@@ -7,7 +7,6 @@ import com.momentum.review.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -43,25 +42,20 @@ public class DoctorTreatmentReviewController {
         return ResponseEntity.ok(response);
     }
 
-    // 2024-07-31 push 기준 여전히 문제
     @GetMapping("/hospital-reviews/{hospitalId}/doctor-reviews/{doctorId}")
     public ResponseEntity<List<GetAllDoctorTreatmentReviewPostResponse>> getAllDoctorTreatmentReviewPost(
-            @RequestParam(name = "page", defaultValue = "0")
-            @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") final int page,
             @PathVariable("hospitalId") Long hospitalId,
             @PathVariable("doctorId") Long doctorId
     ) {
-        List<GetAllDoctorTreatmentReviewPostResponse> responses = doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(
-                hospitalId,
-                doctorId);
-        return ResponseEntity.ok(doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(hospitalId, doctorId));
+        List<GetAllDoctorTreatmentReviewPostResponse> responses =
+                doctorTreatmentReviewService.getAllDoctorTreatmentReviewPosts(hospitalId, doctorId);
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/total-reviews/doctors")
     public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-
         GetDoctorTreatmentReviewPostTotalResponse response =
                 integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         return ResponseEntity.ok(response);

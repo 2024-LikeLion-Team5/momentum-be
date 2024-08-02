@@ -3,13 +3,13 @@ package com.momentum.community.application;
 import com.momentum.community.domain.ConcernPost;
 import com.momentum.community.domain.ConcernPostRepository;
 import com.momentum.community.domain.vo.Disease;
-import com.momentum.post.domain.vo.PostType;
 import com.momentum.community.dto.request.CreateConcernPostRequest;
 import com.momentum.community.dto.response.GetAllConcernPostResponse;
 import com.momentum.community.dto.response.GetConcernPostResponse;
 import com.momentum.community.dto.response.GetConcernPostTotalResponse;
 import com.momentum.community.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
+import com.momentum.post.domain.vo.PostType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -49,6 +49,12 @@ public class ConcernPostService {
     @Transactional(readOnly = true)
     public List<GetAllConcernPostResponse> getAllConcernPosts(final String diseaseRequest, final int page) {
         final Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
+        if (diseaseRequest == null) {
+            return concernPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+                    .stream()
+                    .map(GetAllConcernPostResponse::from)
+                    .toList();
+        }
         return concernPostRepository.findAllByDiseaseAndOrderByCreatedAtDesc(Disease.valueOf(diseaseRequest), pageable)
                 .stream()
                 .map(GetAllConcernPostResponse::from)

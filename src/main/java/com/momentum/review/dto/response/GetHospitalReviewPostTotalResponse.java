@@ -1,11 +1,8 @@
 package com.momentum.review.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.momentum.review.domain.HospitalReviewPost;
 import lombok.Builder;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -13,19 +10,18 @@ public class GetHospitalReviewPostTotalResponse {
 
     private Long postId;
     private String title;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
-    LocalDateTime createdAt;
+    private String hospital;
     private String treatment;
     private double facilityRating;
     private double atmosphereRating;
     private double employeeRating;
     private String content;
 
-    public static GetHospitalReviewPostTotalResponse of(HospitalReviewPost hospitalReviewPost) {
+    public static GetHospitalReviewPostTotalResponse from(HospitalReviewPost hospitalReviewPost) {
         return GetHospitalReviewPostTotalResponse.builder()
                 .postId(hospitalReviewPost.getId())
                 .title(hospitalReviewPost.getTitle())
-                .createdAt(hospitalReviewPost.getCreatedAt())
+                .hospital(hospitalReviewPost.getHospital())
                 .treatment(hospitalReviewPost.getTreatment())
                 .facilityRating(hospitalReviewPost.getFacilityRating())
                 .atmosphereRating(hospitalReviewPost.getAtmosphereRating())

@@ -1,98 +1,46 @@
 package com.momentum.review.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.momentum.community.domain.vo.Disease;
+import com.momentum.review.domain.DoctorTreatmentReviewPost;
 import com.momentum.review.domain.vo.AgeGroup;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public record GetDoctorTreatmentReviewPostTotalResponse(
         long totalSearchedCount,
-        List<DoctorTreatmentReviewPostsResponse> doctorTreatmentReviewPostsResponses
+        List<DoctorTreatmentReviewPostResponse> doctorTreatmentReviewPostRespons
 ) {
 
     public static GetDoctorTreatmentReviewPostTotalResponse of(
             long totalSearchedCount,
-            List<IntegrationDoctorReviewSearchDto> integrationDoctorReviewResponsSearchDtos
+            List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts
     ) {
-        List<DoctorTreatmentReviewPostsResponse> doctorTreatmentReviewPostsResponses = integrationDoctorReviewResponsSearchDtos.stream()
-                .map(it -> new DoctorTreatmentReviewPostsResponse(
-                        it.postId(),
-                        it.title(),
-                        it.createdAt(),
-                        it.disease(),
-                        it.treatment(),
-                        it.doctor(),
-                        it.ageGroup(),
-                        it.rating(),
-                        it.content()
-                )).toList();
 
-        return new GetDoctorTreatmentReviewPostTotalResponse(totalSearchedCount, doctorTreatmentReviewPostsResponses);
+        List<DoctorTreatmentReviewPostResponse> doctorTreatmentReviewPostResponse =
+                doctorTreatmentReviewPosts.stream()
+                        .map(it -> new DoctorTreatmentReviewPostResponse(
+                                it.getId(),
+                                it.getDoctorName(),
+                                it.getHospital(),
+                                it.getRating(),
+                                it.getDisease(),
+                                it.getTreatment(),
+                                it.getAgeGroup(),
+                                it.getTitle(),
+                                it.getContent()
+                        )).toList();
+        return new GetDoctorTreatmentReviewPostTotalResponse(totalSearchedCount, doctorTreatmentReviewPostResponse);
     }
 
-    private record DoctorTreatmentReviewPostsResponse(
-            Long id,
-            String title,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
-            LocalDateTime createdAt,
+    private record DoctorTreatmentReviewPostResponse(
+            Long postId,
+            String doctor,
+            String hospital,
+            double rating,
             Disease disease,
             String treatment,
-            String doctor,
             AgeGroup ageGroup,
-            double rating,
+            String title,
             String content
     ) {
     }
 }
-
-//    public static GetDoctorTreatmentReviewPostTotalResponse of(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
-//        return GetDoctorTreatmentReviewPostTotalResponse.builder()
-//                .postId(doctorTreatmentReviewPost.getId())
-//                .title(doctorTreatmentReviewPost.getTitle())
-//                .createdAt(doctorTreatmentReviewPost.getCreatedAt())
-//                .disease(doctorTreatmentReviewPost.getDisease())
-//                .treatment(doctorTreatmentReviewPost.getTreatment())
-//                .doctor(doctorTreatmentReviewPost.getDoctor())
-//                .ageGroup(doctorTreatmentReviewPost.getAgeGroup())
-//                .rating(doctorTreatmentReviewPost.getRating())
-//                .content(doctorTreatmentReviewPost.getContent())
-//                .build();
-//    }
-
-//    @Data
-//    @Builder
-//    @NoArgsConstructor
-//    @AllArgsConstructor
-//    private static class DoctorTreatmentReviewPostResponse {
-//
-//        private Long id;
-//        private String title;
-//        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
-//        private LocalDateTime createdAt;
-//        private String disease;
-//        private String treatment;
-//        private String doctor;
-//        private int ageGroup;
-//        private double rating;
-//        private String content;
-//
-//        public static DoctorTreatmentReviewPostResponse of(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
-//            return DoctorTreatmentReviewPostResponse.builder()
-//                    .id(doctorTreatmentReviewPost.getId())
-//                    .title(doctorTreatmentReviewPost.getTitle())
-//                    .createdAt(doctorTreatmentReviewPost.getCreatedAt())
-//                    .disease(doctorTreatmentReviewPost.getDisease())
-//                    .treatment(doctorTreatmentReviewPost.getTreatment())
-//                    .doctor(doctorTreatmentReviewPost.getDoctor())
-//                    .ageGroup(doctorTreatmentReviewPost.getAgeGroup())
-//                    .rating(doctorTreatmentReviewPost.getRating())
-//                    .content(doctorTreatmentReviewPost.getContent())
-//                    .build();
-//        }
-//    }
-
-//        return GetDoctorTreatmentReviewPostTotalResponse.builder()
-//                .totalSearchedCount(totalSearchedCount)
-//                .doctorTreatmentReviewPostsResponses(doctorTreatmentReviewPostsResponses)
-//                .build();

@@ -11,8 +11,12 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
             "OR LOWER(dtrp.content) LIKE LOWER(CONCAT('%', :keyword, '%')) ")
     long countAllByTitleAndContentContainingOrderByCreatedAtDesc(String keyword);
 
-    List<DoctorTreatmentReviewPost> findAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(
+    List<DoctorTreatmentReviewPost> findAllByTitleContainingOrContentContainingOrderByCreatedAtDesc(
             String title,
             String content
     );
+
+    List<DoctorTreatmentReviewPost> findAllByOrderByCreatedAt();
+
+    List<DoctorTreatmentReviewPost> findAllByDoctor(Doctor doctor);
 }

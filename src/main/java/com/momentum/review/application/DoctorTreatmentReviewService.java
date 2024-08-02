@@ -2,11 +2,17 @@ package com.momentum.review.application;
 
 import com.momentum.community.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
+import com.momentum.review.domain.Doctor;
+import com.momentum.review.domain.DoctorRepository;
 import com.momentum.review.domain.DoctorTreatmentReviewPost;
 import com.momentum.review.domain.DoctorTreatmentReviewPostRepository;
+import com.momentum.review.domain.HospitalInfo;
+import com.momentum.review.domain.HospitalInfoRepository;
 import com.momentum.review.dto.request.CreateDoctorTreatmentReviewPostRequest;
 import com.momentum.review.dto.response.GetAllDoctorTreatmentReviewPostResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostResponse;
+import com.momentum.review.exception.DoctorException;
+import com.momentum.review.exception.HospitalInfoException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,17 +21,32 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class DoctorTreatmentReviewService {
-    
+
     private final DoctorTreatmentReviewPostRepository doctorTreatmentReviewPostRepository;
+    private final HospitalInfoRepository hospitalInfoRepository;
+    private final DoctorRepository doctorRepository;
 
     @Transactional
     public Long createDoctorTreatmentReviewPost(CreateDoctorTreatmentReviewPostRequest request) {
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital())
+                .orElseThrow(() -> new NotFoundException(HospitalInfoException.NON_EXISTENT_HOSPITAL_INFORMATION));
+
+        Doctor doctor = doctorRepository.findByNameAndHospitalInfo(request.doctor(), hospitalInfo)
+                .orElse(
+                        Doctor.builder()
+                                .name(request.doctor())
+                                .hospitalInfo(hospitalInfo)
+                                .build()
+                );
+        doctorRepository.save(doctor);
+
         DoctorTreatmentReviewPost doctorTreatmentReviewPost = DoctorTreatmentReviewPost.builder()
                 .hospital(request.hospital())
                 .disease(request.disease())
                 .treatment(request.treatment())
                 .ageGroup(request.ageGroup())
-                .doctor(request.doctor())
+                .doctorName(request.doctor())
+                .doctor(doctor)
                 .rating(request.rating())
                 .title(request.title())
                 .content(request.content())
@@ -51,12 +72,11 @@ public class DoctorTreatmentReviewService {
             final Long hospitalId,
             final Long doctorId
     ) {
-        // 목록 조회라 page 사용하고 병원 id로 병원 찾고 해당하는 의사도 의사 id로 찾고 싶은데 조금 어렵습니다 ..
-        // 2024-07-31 기준 page 파라미터 삭제했습니다
-        // TODO: 정훈 님께 부탁드릴 곳
-        return doctorTreatmentReviewPostRepository.findAll()
+        Doctor doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new NotFoundException(DoctorException.NON_EXISTENT_DOCTOR));
+        return doctorTreatmentReviewPostRepository.findAllByDoctor(doctor)
                 .stream()
-                .map(GetAllDoctorTreatmentReviewPostResponse::of)
+                .map(GetAllDoctorTreatmentReviewPostResponse::from)
                 .toList();
     }
 

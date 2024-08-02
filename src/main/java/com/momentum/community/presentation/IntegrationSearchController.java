@@ -3,7 +3,6 @@ package com.momentum.community.presentation;
 import com.momentum.community.application.IntegrationSearchService;
 import com.momentum.community.dto.response.GetCommunityIntegrationSearchResponse;
 import com.momentum.community.dto.response.GetCommunityPostTotalResponse;
-import com.momentum.review.application.HospitalInfoService;
 import com.momentum.review.dto.response.GetAllHospitalInfoTotalResponse;
 import com.momentum.review.dto.response.GetDoctorTreatmentReviewPostTotalResponse;
 import com.momentum.review.dto.response.IntegrationDoctorReviewSearchDto;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class IntegrationSearchController {
 
     private final IntegrationSearchService integrationSearchService;
-    private final HospitalInfoService hospitalInfoService;
 
     @GetMapping("/communities")
     public ResponseEntity<List<GetCommunityIntegrationSearchResponse>> getCommunityPosts(
@@ -44,8 +42,8 @@ public class IntegrationSearchController {
     public ResponseEntity<GetDoctorTreatmentReviewPostTotalResponse> getDoctorTreatmentReviewPostsTotal(
             @RequestParam(required = false) String keyword
     ) {
-        GetDoctorTreatmentReviewPostTotalResponse response = integrationSearchService.getDoctorTreatmentReviewPostsTotal(
-                keyword);
+        GetDoctorTreatmentReviewPostTotalResponse response =
+                integrationSearchService.getDoctorTreatmentReviewPostsTotal(keyword);
         return ResponseEntity.ok(response);
     }
 

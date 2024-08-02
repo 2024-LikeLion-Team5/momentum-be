@@ -31,7 +31,7 @@ public record IntegrationDoctorReviewSearchDto(
                 doctorTreatmentReviewPost.getCreatedAt(),
                 doctorTreatmentReviewPost.getDisease(),
                 doctorTreatmentReviewPost.getTreatment(),
-                doctorTreatmentReviewPost.getDoctor(),
+                doctorTreatmentReviewPost.getDoctorName(),
                 doctorTreatmentReviewPost.getAgeGroup(),
                 doctorTreatmentReviewPost.getRating(),
                 doctorTreatmentReviewPost.getContent(),

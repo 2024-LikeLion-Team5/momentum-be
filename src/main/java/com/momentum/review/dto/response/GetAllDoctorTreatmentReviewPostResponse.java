@@ -23,14 +23,14 @@ public class GetAllDoctorTreatmentReviewPostResponse {
     private double rating;
     private String content;
 
-    public static GetAllDoctorTreatmentReviewPostResponse of(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
+    public static GetAllDoctorTreatmentReviewPostResponse from(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
         return GetAllDoctorTreatmentReviewPostResponse.builder()
                 .postId(doctorTreatmentReviewPost.getId())
                 .title(doctorTreatmentReviewPost.getTitle())
                 .createdAt(doctorTreatmentReviewPost.getCreatedAt())
                 .disease(doctorTreatmentReviewPost.getDisease())
                 .treatment(doctorTreatmentReviewPost.getTreatment())
-                .doctor(doctorTreatmentReviewPost.getDoctor())
+                .doctor(doctorTreatmentReviewPost.getDoctorName())
                 .ageGroup(doctorTreatmentReviewPost.getAgeGroup())
                 .rating(doctorTreatmentReviewPost.getRating())
                 .content(doctorTreatmentReviewPost.getContent())

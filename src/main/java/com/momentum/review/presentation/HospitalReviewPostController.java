@@ -2,6 +2,7 @@ package com.momentum.review.presentation;
 
 import com.momentum.review.application.HospitalReviewPostService;
 import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
+import com.momentum.review.dto.response.GetDoctorResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostTotalResponse;
 import jakarta.validation.Valid;
@@ -43,6 +44,12 @@ public class HospitalReviewPostController {
     ) {
         List<GetHospitalReviewPostResponse> responses =
                 hospitalReviewPostService.getAllHospitalReviewPosts(page, hospitalId);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/hospitals/{hospitalId}/doctors")
+    public ResponseEntity<List<GetDoctorResponse>> getDoctors(@PathVariable Long hospitalId) {
+        List<GetDoctorResponse> responses = hospitalReviewPostService.getDoctors(hospitalId);
         return ResponseEntity.ok(responses);
     }
 

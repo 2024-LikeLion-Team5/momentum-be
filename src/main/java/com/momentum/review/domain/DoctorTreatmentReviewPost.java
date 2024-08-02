@@ -7,9 +7,12 @@ import com.momentum.review.domain.vo.AgeGroup;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -26,6 +29,10 @@ public class DoctorTreatmentReviewPost extends Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctor;
+
     private String hospital;
 
     private Disease disease;
@@ -35,7 +42,7 @@ public class DoctorTreatmentReviewPost extends Post {
     @Enumerated(value = EnumType.STRING)
     private AgeGroup ageGroup;
 
-    private String doctor;
+    private String doctorName;
 
     private double rating;
 
@@ -47,19 +54,21 @@ public class DoctorTreatmentReviewPost extends Post {
             final long likes,
             final long dislikes,
             final PostType postType,
+            final Doctor doctor,
             final String hospital,
             final Disease disease,
             final String treatment,
             final AgeGroup ageGroup,
-            final String doctor,
+            final String doctorName,
             final double rating
     ) {
         super(title, content, hits, likes, dislikes, postType);
+        this.doctor = doctor;
         this.hospital = hospital;
         this.disease = disease;
         this.treatment = treatment;
         this.ageGroup = ageGroup;
-        this.doctor = doctor;
+        this.doctorName = doctorName;
         this.rating = rating;
     }
 }

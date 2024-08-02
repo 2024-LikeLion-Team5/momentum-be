@@ -2,13 +2,16 @@ package com.momentum.review.application;
 
 import com.momentum.community.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
+import com.momentum.review.domain.DoctorRepository;
 import com.momentum.review.domain.HospitalInfo;
 import com.momentum.review.domain.HospitalInfoRepository;
 import com.momentum.review.domain.HospitalReviewPost;
 import com.momentum.review.domain.HospitalReviewPostRepository;
 import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
+import com.momentum.review.dto.response.GetDoctorResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostTotalResponse;
+import com.momentum.review.exception.HospitalInfoException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -25,10 +28,14 @@ public class HospitalReviewPostService {
 
     private final HospitalReviewPostRepository hospitalReviewPostRepository;
     private final HospitalInfoRepository hospitalInfoRepository;
+    private final DoctorRepository doctorRepository;
 
     @Transactional
     public Long createHospitalReviewPost(CreateHospitalReviewPostRequest request) {
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital())
+                .orElseThrow(() -> new NotFoundException(HospitalInfoException.NON_EXISTENT_HOSPITAL_INFORMATION));
         HospitalReviewPost hospitalReviewPost = HospitalReviewPost.builder()
+                .hospitalInfo(hospitalInfo)
                 .treatment(request.treatment())
                 .hospital(request.hospital())
                 .facilityRating(request.facilityRating())
@@ -42,7 +49,6 @@ public class HospitalReviewPostService {
                 .build();
 
         // 평점 업데이트
-        HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospital(request.hospital());
         long reviewCounts = hospitalReviewPostRepository.countAllByHospitalInfo(hospitalInfo);
         hospitalInfo.updateRatings(
                 reviewCounts,
@@ -74,7 +80,16 @@ public class HospitalReviewPostService {
     public List<GetHospitalReviewPostTotalResponse> getHospitalReviewPostsTotal() {
         return hospitalReviewPostRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
-                .map(GetHospitalReviewPostTotalResponse::of)
+                .map(GetHospitalReviewPostTotalResponse::from)
+                .toList();
+    }
+
+    public List<GetDoctorResponse> getDoctors(Long hospitalId) {
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findById(hospitalId)
+                .orElseThrow(() -> new NotFoundException(HospitalInfoException.NON_EXISTENT_HOSPITAL_INFORMATION));
+        return doctorRepository.findAllByHospitalInfo(hospitalInfo)
+                .stream()
+                .map(GetDoctorResponse::from)
                 .toList();
     }
 }

@@ -38,14 +38,14 @@ public class HospitalReviewPost extends Post {
     private double employeeRating;
 
     @Builder
-    public HospitalReviewPost(
+    private HospitalReviewPost(
             final String title,
             final String content,
             final long hits,
             final long likes,
             final long dislikes,
             final PostType postType,
-            final Long id,
+            final HospitalInfo hospitalInfo,
             final String treatment,
             final String hospital,
             final double facilityRating,
@@ -53,7 +53,7 @@ public class HospitalReviewPost extends Post {
             final double employeeRating
     ) {
         super(title, content, hits, likes, dislikes, postType);
-        this.id = id;
+        this.hospitalInfo = hospitalInfo;
         this.treatment = treatment;
         this.hospital = hospital;
         this.facilityRating = facilityRating;

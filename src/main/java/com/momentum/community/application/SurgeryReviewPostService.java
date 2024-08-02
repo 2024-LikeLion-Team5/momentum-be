@@ -3,13 +3,13 @@ package com.momentum.community.application;
 import com.momentum.community.domain.SurgeryReviewPost;
 import com.momentum.community.domain.SurgeryReviewPostRepository;
 import com.momentum.community.domain.vo.Disease;
-import com.momentum.post.domain.vo.PostType;
 import com.momentum.community.dto.request.CreateSurgeryReviewPostRequest;
 import com.momentum.community.dto.response.GetAllSurgeryReviewPostResponse;
 import com.momentum.community.dto.response.GetSurgeryReviewPostResponse;
 import com.momentum.community.dto.response.GetSurgeryReviewPostTotalResponse;
 import com.momentum.community.exception.CommunityPostException;
 import com.momentum.global.exception.NotFoundException;
+import com.momentum.post.domain.vo.PostType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -50,6 +50,13 @@ public class SurgeryReviewPostService {
     @Transactional(readOnly = true)
     public List<GetAllSurgeryReviewPostResponse> getAllSurgeryReviewPosts(final String disease, final int page) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
+
+        if (disease == null) {
+            return surgeryReviewPostRepository.findAllByOrderByCreatedAtDesc(pageable)
+                    .stream()
+                    .map(GetAllSurgeryReviewPostResponse::from)
+                    .toList();
+        }
         return surgeryReviewPostRepository.findAllByDiseaseAndOrderByCreatedAtDesc(Disease.valueOf(disease), pageable)
                 .stream()
                 .map(GetAllSurgeryReviewPostResponse::from)

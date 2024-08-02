@@ -36,7 +36,7 @@ public class GetDoctorTreatmentReviewPostResponse {
                 .treatment(doctorTreatmentReviewPost.getTreatment())
                 .ageGroup(doctorTreatmentReviewPost.getAgeGroup())
                 .rating(doctorTreatmentReviewPost.getRating())
-                .doctorName(doctorTreatmentReviewPost.getDoctor())
+                .doctorName(doctorTreatmentReviewPost.getDoctorName())
                 .content(doctorTreatmentReviewPost.getContent())
                 .build();
     }
