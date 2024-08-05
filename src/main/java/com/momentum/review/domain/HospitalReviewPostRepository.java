@@ -12,6 +12,6 @@ public interface HospitalReviewPostRepository extends JpaRepository<HospitalRevi
     List<HospitalReviewPost> findAllByOrderByCreatedAtDesc();
 
     long countAllByHospitalInfo(HospitalInfo hospitalInfo);
-    
-    Page<HospitalReviewPost> findAllByHospitalInfoId(Long hospitalInfoId, Pageable pageable);
+
+    Page<HospitalReviewPost> findAllByHospitalInfo(HospitalInfo hospitalInfo, Pageable pageable);
 }

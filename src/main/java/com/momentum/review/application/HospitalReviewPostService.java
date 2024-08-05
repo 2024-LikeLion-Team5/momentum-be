@@ -11,6 +11,7 @@ import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.review.dto.response.GetDoctorResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostTotalResponse;
+import com.momentum.review.dto.response.GetHospitalReviewPostsResponse;
 import com.momentum.review.exception.HospitalInfoException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -66,14 +67,16 @@ public class HospitalReviewPostService {
         return GetHospitalReviewPostResponse.of(hospitalReviewPost);
     }
 
-    public List<GetHospitalReviewPostResponse> getAllHospitalReviewPosts(
+    public List<GetHospitalReviewPostsResponse> getAllHospitalReviewPosts(
             final int page,
             final Long hospitalId
     ) {
         Pageable pageable = PageRequest.of(page, INITIAL_PAGE_SIZE);
-        return hospitalReviewPostRepository.findAllByHospitalInfoId(hospitalId, pageable)
+        HospitalInfo hospitalInfo = hospitalInfoRepository.findById(hospitalId)
+                .orElseThrow(() -> new NotFoundException(HospitalInfoException.NON_EXISTENT_HOSPITAL_INFORMATION));
+        return hospitalReviewPostRepository.findAllByHospitalInfo(hospitalInfo, pageable)
                 .stream()
-                .map(GetHospitalReviewPostResponse::of)
+                .map(GetHospitalReviewPostsResponse::from)
                 .toList();
     }
 

@@ -16,7 +16,7 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
             String content
     );
 
-    List<DoctorTreatmentReviewPost> findAllByOrderByCreatedAt();
+    List<DoctorTreatmentReviewPost> findAllByOrderByCreatedAtDesc();
 
     List<DoctorTreatmentReviewPost> findAllByDoctor(Doctor doctor);
 }

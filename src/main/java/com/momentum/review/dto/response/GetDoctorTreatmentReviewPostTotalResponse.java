@@ -14,20 +14,20 @@ public record GetDoctorTreatmentReviewPostTotalResponse(
             long totalSearchedCount,
             List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts
     ) {
-
         List<DoctorTreatmentReviewPostResponse> doctorTreatmentReviewPostResponse =
                 doctorTreatmentReviewPosts.stream()
-                        .map(it -> new DoctorTreatmentReviewPostResponse(
-                                it.getId(),
-                                it.getDoctorName(),
-                                it.getHospital(),
-                                it.getRating(),
-                                it.getDisease(),
-                                it.getTreatment(),
-                                it.getAgeGroup(),
-                                it.getTitle(),
-                                it.getContent()
-                        )).toList();
+                        .map(doctorTreatmentReviewPost -> new DoctorTreatmentReviewPostResponse(
+                                        doctorTreatmentReviewPost.getId(),
+                                        doctorTreatmentReviewPost.getDoctorName(),
+                                        doctorTreatmentReviewPost.getHospital(),
+                                        doctorTreatmentReviewPost.getRating(),
+                                        doctorTreatmentReviewPost.getDisease(),
+                                        doctorTreatmentReviewPost.getTreatment(),
+                                        doctorTreatmentReviewPost.getAgeGroup(),
+                                        doctorTreatmentReviewPost.getTitle(),
+                                        doctorTreatmentReviewPost.getContent()
+                                )
+                        ).toList();
         return new GetDoctorTreatmentReviewPostTotalResponse(totalSearchedCount, doctorTreatmentReviewPostResponse);
     }
 

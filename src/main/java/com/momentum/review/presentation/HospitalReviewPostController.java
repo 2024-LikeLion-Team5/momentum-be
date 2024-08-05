@@ -5,6 +5,7 @@ import com.momentum.review.dto.request.CreateHospitalReviewPostRequest;
 import com.momentum.review.dto.response.GetDoctorResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostResponse;
 import com.momentum.review.dto.response.GetHospitalReviewPostTotalResponse;
+import com.momentum.review.dto.response.GetHospitalReviewPostsResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.net.URI;
@@ -37,12 +38,12 @@ public class HospitalReviewPostController {
     }
 
     @GetMapping("/hospital-reviews/{hospitalId}/by-hospital-reviews")
-    public ResponseEntity<List<GetHospitalReviewPostResponse>> getAllHospitalReviewPost(
+    public ResponseEntity<List<GetHospitalReviewPostsResponse>> getAllHospitalReviewPost(
             @RequestParam(name = "page", defaultValue = "0")
             @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") final int page,
             @PathVariable("hospitalId") Long hospitalId
     ) {
-        List<GetHospitalReviewPostResponse> responses =
+        List<GetHospitalReviewPostsResponse> responses =
                 hospitalReviewPostService.getAllHospitalReviewPosts(page, hospitalId);
         return ResponseEntity.ok(responses);
     }
