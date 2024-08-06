@@ -66,20 +66,16 @@ public class IntegrationSearchService {
         HospitalInfo hospitalInfo = hospitalInfoRepository.findByHospitalContainingAndAddressContaining(keyword, keyword);
 
         // 키워드랑 위에서 찾은 병원 정보 의사 정보를 찾고
-        Optional<Doctor> doctor = doctorRepository.findByNameAndHospitalInfo(keyword, hospitalInfo);
+        Doctor doctor = doctorRepository.findHospitalInfo(hospitalInfo);
 
         // 해당하는 의사로 의사 상담 후기를 찾고
-
-
-        List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts = doctorTreatmentReviewPostRepository.findAllByTitleContainingOrContentContainingOrderByCreatedAtDesc(
-                        keyword,
-                        keyword
-                ).stream()
-                .limit(3)
+        List<DoctorTreatmentReviewPost> doctorTreatmentReviewPostList = doctorTreatmentReviewPostRepository
+                .findAllByDoctor(doctor)
+                .stream()
                 .toList();
         return GetDoctorTreatmentReviewPostTotalResponse.of(
                 totalSearchedCount,
-                doctorTreatmentReviewPosts
+                doctorTreatmentReviewPostList
         );
     }
 
