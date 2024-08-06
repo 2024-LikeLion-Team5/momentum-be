@@ -1,5 +1,6 @@
 package com.momentum.review.domain;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,4 +15,6 @@ public interface HospitalInfoRepository extends JpaRepository<HospitalInfo, Long
     long countByHospitalContainingOrAddressContaining(String hospital, String address);
 
     Optional<HospitalInfo> findByHospital(String hospital);
+
+    HospitalInfo findByHospitalContainingAndAddressContaining(String hospital, String address);
 }

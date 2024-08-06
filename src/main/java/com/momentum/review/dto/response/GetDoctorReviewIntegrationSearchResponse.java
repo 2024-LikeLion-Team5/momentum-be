@@ -15,14 +15,14 @@ public record GetDoctorReviewIntegrationSearchResponse(
 ) {
 
     public static GetDoctorReviewIntegrationSearchResponse from(
-            IntegrationDoctorReviewSearchDto integrationDoctorReviewSearchDto
+            IntegrationDoctorReviewPostSearchDto integrationDoctorReviewPostSearchDto
     ) {
         return new GetDoctorReviewIntegrationSearchResponse(
-                integrationDoctorReviewSearchDto.postId(),
-                integrationDoctorReviewSearchDto.title(),
-                integrationDoctorReviewSearchDto.createdAt(),
-                integrationDoctorReviewSearchDto.likeCount(),
-                integrationDoctorReviewSearchDto.hits()
+                integrationDoctorReviewPostSearchDto.postId(),
+                integrationDoctorReviewPostSearchDto.title(),
+                integrationDoctorReviewPostSearchDto.createdAt(),
+                integrationDoctorReviewPostSearchDto.likeCount(),
+                integrationDoctorReviewPostSearchDto.hits()
         );
     }
 }

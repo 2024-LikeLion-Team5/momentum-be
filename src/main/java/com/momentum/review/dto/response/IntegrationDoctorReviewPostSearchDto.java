@@ -8,7 +8,7 @@ import com.momentum.review.domain.vo.AgeGroup;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-public record IntegrationDoctorReviewSearchDto(
+public record IntegrationDoctorReviewPostSearchDto(
         long postId,
         String title,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd.")
@@ -24,8 +24,8 @@ public record IntegrationDoctorReviewSearchDto(
         PostType postType
 ) {
 
-    public static IntegrationDoctorReviewSearchDto from(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
-        return new IntegrationDoctorReviewSearchDto(
+    public static IntegrationDoctorReviewPostSearchDto from(DoctorTreatmentReviewPost doctorTreatmentReviewPost) {
+        return new IntegrationDoctorReviewPostSearchDto(
                 doctorTreatmentReviewPost.getId(),
                 doctorTreatmentReviewPost.getTitle(),
                 doctorTreatmentReviewPost.getCreatedAt(),
@@ -41,8 +41,8 @@ public record IntegrationDoctorReviewSearchDto(
         );
     }
 
-    public static IntegrationDoctorReviewSearchDto from(Object[] query) {
-        return new IntegrationDoctorReviewSearchDto(
+    public static IntegrationDoctorReviewPostSearchDto from(Object[] query) {
+        return new IntegrationDoctorReviewPostSearchDto(
                 ((Number) query[0]).longValue(),
                 (String) query[1],
                 ((Timestamp) query[2]).toLocalDateTime(),
