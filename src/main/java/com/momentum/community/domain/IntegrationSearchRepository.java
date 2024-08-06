@@ -63,7 +63,4 @@ public interface IntegrationSearchRepository extends JpaRepository<Post, Long> {
             "OR LOWER(community.content) LIKE LOWER(CONCAT('%', :keyword, '%'))",
             nativeQuery = true)
     long countAllByKeyword(String keyword);
-
-    // 통합 검색에서 의사 상담 후기 전체 찾으려고 했습니다
-    Page<Object[]> findAllByKeywordContaining(String keyword, Pageable pageable);
 }

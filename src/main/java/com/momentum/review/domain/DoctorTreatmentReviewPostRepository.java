@@ -1,9 +1,6 @@
 package com.momentum.review.domain;
 
 import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -23,5 +20,8 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
 
     List<DoctorTreatmentReviewPost> findAllByDoctor(Doctor doctor);
 
-    List<DoctorTreatmentReviewPost> findAllByKeyword(String keyword);
+    List<DoctorTreatmentReviewPost> findAllByDoctorNameContainingAndHospitalContainingOrderByCreatedAtDesc(
+            String doctorNameContaining,
+            String hospitalContaining
+    );
 }

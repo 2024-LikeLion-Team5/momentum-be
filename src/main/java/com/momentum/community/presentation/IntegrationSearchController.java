@@ -54,7 +54,7 @@ public class IntegrationSearchController {
             @PositiveOrZero(message = "페이지 수는 0 이상인 정수만 가능합니다.") int page
     ) {
         List<IntegrationDoctorReviewPostSearchDto> responses =
-                integrationSearchService.getDoctorReviewPosts(keyword, page);
+                integrationSearchService.getDoctorReviewPostAll(keyword, page);
         return ResponseEntity.ok(responses);
     }
 
