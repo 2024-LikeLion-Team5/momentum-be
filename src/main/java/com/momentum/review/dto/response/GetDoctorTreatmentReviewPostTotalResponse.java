@@ -7,7 +7,7 @@ import java.util.List;
 
 public record GetDoctorTreatmentReviewPostTotalResponse(
         long totalSearchedCount,
-        List<DoctorTreatmentReviewPostResponse> doctorTreatmentReviewPostRespons
+        List<DoctorTreatmentReviewPostResponse> doctorTreatmentReviewPostResponses
 ) {
 
     public static GetDoctorTreatmentReviewPostTotalResponse of(

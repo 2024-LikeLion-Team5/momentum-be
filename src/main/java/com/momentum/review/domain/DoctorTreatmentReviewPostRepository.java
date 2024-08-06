@@ -9,7 +9,7 @@ public interface DoctorTreatmentReviewPostRepository extends JpaRepository<Docto
     @Query("select count(*) from DoctorTreatmentReviewPost dtrp " +
             "WHERE LOWER(dtrp.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +
             "OR LOWER(dtrp.content) LIKE LOWER(CONCAT('%', :keyword, '%')) ")
-    long countAllByTitleAndContentContainingOrderByCreatedAtDesc(String keyword);
+    long countAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(String keyword);
 
     List<DoctorTreatmentReviewPost> findAllByTitleContainingOrContentContainingOrderByCreatedAtDesc(
             String title,

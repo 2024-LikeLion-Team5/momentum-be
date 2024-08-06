@@ -51,7 +51,7 @@ public class IntegrationSearchService {
 
     public GetDoctorTreatmentReviewPostTotalResponse getDoctorTreatmentReviewPostsTotal(final String keyword) {
         long totalSearchedCount =
-                doctorTreatmentReviewPostRepository.countAllByTitleAndContentContainingOrderByCreatedAtDesc(keyword);
+                doctorTreatmentReviewPostRepository.countAllByTitleContainingAndContentContainingOrderByCreatedAtDesc(keyword);
 
         if (keyword == null) {
             List<DoctorTreatmentReviewPost> doctorTreatmentReviewPosts = doctorTreatmentReviewPostRepository.findAllByOrderByCreatedAtDesc();
